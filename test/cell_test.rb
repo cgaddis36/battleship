@@ -65,6 +65,11 @@ class CellTest <Minitest::Test
       cell_2.place_ship(cruiser)
 
       assert_equal ".", cell_2.render
+
+      cell_2.fire_upon
+
+      assert_equal "H", cell_2.render 
+
     end
 
 
