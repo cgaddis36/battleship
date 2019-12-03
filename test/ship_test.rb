@@ -29,6 +29,19 @@ class ShipTest < Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
     cruiser.hit
     assert_equal cruiser.health, 2
+    cruiser.hit
+    assert_equal cruiser.health, 1
   end
+
+def test_it_sinks
+  cruiser = Ship.new("Cruiser", 3)
+  cruiser.hit
+  assert_equal cruiser.health, 2
+  cruiser.hit
+  assert_equal cruiser.health, 1
+  cruiser.hit
+  assert cruiser.sunk?
+end
+
 
 end
