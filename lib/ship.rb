@@ -6,6 +6,7 @@ class Ship
     @length = length
     @health = 3
     @sunk = false
+    @hits = 0
   end
 
   def hit

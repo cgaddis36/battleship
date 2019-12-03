@@ -27,4 +27,10 @@ class Cell
     @fired_upon = true
   end
 
+  def render
+    return "." if @fired_upon = false
+  elsif return "M" @fired_upon = true && @hits = 0
+      elsif return "H" @fired_upon = true && @hits > 0 && @sunk = false
+      elsif return "X" @fired_upon = true && @sunk = true
+  end
 end

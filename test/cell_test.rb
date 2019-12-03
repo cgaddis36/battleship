@@ -37,4 +37,10 @@ class CellTest < Minitest::Test
     assert_equal cruiser.health, 2
     assert cell.fired_upon?
   end
+
+  def test_render
+    cell_1 = Cell.new("B4")
+    assert_equal cell_1.render, "."
+  end
+
 end
