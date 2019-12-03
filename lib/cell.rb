@@ -22,8 +22,8 @@ class Cell
     @fired_upon
   end
 
-  def fire_upon
-    @health -= 1
+  def fire_upon(cruiser)
+    cruiser.hit
     @fired_upon = true
   end
 
