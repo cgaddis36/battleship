@@ -35,10 +35,10 @@ class Cell
       "."
     elsif @ship == nil
         "M"
-    elsif @ship.sunk == true
-        "X"
-    elsif @ship.length > @ship.health
+    elsif @ship.health > 0
         "H"
+    else
+      "X"
     end
   end
 
