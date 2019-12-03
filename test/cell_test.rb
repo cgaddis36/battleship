@@ -18,9 +18,21 @@ class CellTest <Minitest::Test
   assert_equal "B4", cell.coordinate
   end
 
+  def test_cell_starts_empty
+    cell = Cell.new("B4")
 
+    assert_equal true, cell.empty?
+  end
 
+  def test_not_empty_after_placement_
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
 
+    cell.place_ship(cruiser)
+    # binding.pry
+  assert_equal cruiser, cell.ship
+  assert_equal false, cell.empty?
+  end
 
 
 
