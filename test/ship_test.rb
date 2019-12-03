@@ -43,5 +43,4 @@ def test_it_sinks
   assert cruiser.sunk?
 end
 
-
 end
