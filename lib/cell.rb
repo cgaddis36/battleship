@@ -22,4 +22,9 @@ class Cell
     @fired_upon
   end
 
+  def fire_upon
+    @health -= 1
+    @fired_upon = true
+  end
+
 end

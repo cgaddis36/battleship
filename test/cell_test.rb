@@ -22,6 +22,19 @@ class CellTest < Minitest::Test
     refute cell.empty?
   end
 
-  
+  def test_it_is_not_fired_upon_default
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    cell.place_ship(cruiser)
+    refute cell.fired_upon?
+  end
 
+  def test_firing_works
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    cell.place_ship(cruiser)
+    cell.fire_upon
+    assert_equal cruiser.health, 2
+    assert cell.fired_upon?
+  end
 end
