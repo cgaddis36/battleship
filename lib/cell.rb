@@ -30,23 +30,18 @@ class Cell
 
   def render(see = false)
     return "S" if see == true && @ship != nil
-    return "." @fired_upon == false
 
-    if @ship = nil
+
+    if @fired_upon == false
+      "."
+    elsif @ship == nil
         "M"
-    else
-      if @ship.sunk == true
+    elsif @ship.sunk == true
         "X"
-    else
-      if @ship.length > @ship.health
+    elsif @ship.length > @ship.health
         "H"
     end
-    end
-
   end
-
-
-
 
 
 end
