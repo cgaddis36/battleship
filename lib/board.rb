@@ -1,5 +1,5 @@
 class Board
-  attr_reader :cell
+  attr_reader :cells
 
   def initialize
     @cells = {
@@ -22,15 +22,18 @@ class Board
           }
   end
 
+  def valid_coordinate?(coordinate)
+    @cells.has_key?(coordinate)
+  end
 
+  def valid_placement(ship, coordinates = [])
+    return false if coordinates.length != ship.length
 
+      coordinates.all? do |coordinate|
+        valid_coordinate?(coordinate)
+      end
+      #this covers the first two validations, need to talk about best way to validatate
+      #
+  end
 
-
-
-
-
-
-
-
-
-    }
+end
