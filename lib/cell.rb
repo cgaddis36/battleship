@@ -7,7 +7,6 @@ class Cell
     @coordinate = coordinate
     @ship = ship
     @fired_upon = false
-
   end
 
   def empty?
@@ -20,8 +19,8 @@ class Cell
 
   def fire_upon
     @fired_upon = true
-    return if @ship == nil
-     @ship.hit
+      return if @ship == nil
+    @ship.hit
   end
 
   def fired_upon?
@@ -31,14 +30,14 @@ class Cell
   def render(see = false)
     return "S" if see == true && @ship != nil
 
-    if @fired_upon == false
-      "."
-    elsif @ship == nil
+      if @fired_upon == false
+        "."
+      elsif @ship == nil
         "M"
-    elsif @ship.health > 0
+      elsif @ship.health > 0
         "H"
-    else
-      "X"
+      else
+        "X"
     end
   end
 

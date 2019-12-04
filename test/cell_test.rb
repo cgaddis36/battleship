@@ -54,37 +54,32 @@ class CellTest <Minitest::Test
     assert_equal ".", cell_1.render
 
     cell_1.fire_upon
-
     assert_equal "M", cell_1.render
   end
 
-  def test_render_returns_correct_if_not_fired_upon
+  def test_render_returns_correct_if_not_fired_upon_also_if_hit
       cell_2 = Cell.new("C3")
       cruiser = Ship.new("Cruiser", 3)
 
       cell_2.place_ship(cruiser)
-
       assert_equal ".", cell_2.render
 
       cell_2.fire_upon
-
       assert_equal "H", cell_2.render
 
-    end
+  end
 
   def test_render_shows_ship_with_optional_argument
-    cell_2 = Cell.new("C3")
     cruiser = Ship.new("Cruiser", 3)
     cell_1 = Cell.new("C2")
+    cell_2 = Cell.new("C3")
     cell_3 = Cell.new("C4")
 
     cell_1.place_ship(cruiser)
     # binding.pry
     cell_2.place_ship(cruiser)
-
-
     assert_equal "S", cell_2.render(true)
-      # binding.pry
+    # binding.pry
     cell_3.place_ship(cruiser)
 
     cell_1.fire_upon
@@ -94,28 +89,6 @@ class CellTest <Minitest::Test
     assert_equal true, cruiser.sunk?
     assert_equal "X", cell_1.render
   end
-
-  cell_2 = Cell.new("C3")
-  cruiser = Ship.new("Cruiser", 3)
-  cell_1 = Cell.new("C2")
-  cell_3 = Cell.new("C4")
-
-  cell_1.place_ship(cruiser)
-  # binding.pry
-  cell_2.place_ship(cruiser)
-    # binding.pry
-  cell_3.place_ship(cruiser)
-
-  cell_1.fire_upon
-  cell_2.fire_upon
-  cell_3.fire_upon
-  # binding.pry
-
-
-
-
-
-
 
 
 

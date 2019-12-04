@@ -9,7 +9,7 @@ class ShipTest <Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
 
   assert_instance_of Ship, cruiser
-end
+  end
 
   def test_ship_has_name_length_and_health
     cruiser = Ship.new("Cruiser", 3)
@@ -39,22 +39,6 @@ end
       assert_equal 0, cruiser.health
       assert_equal true, cruiser.sunk?
 
-    end
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  end
 
 end
