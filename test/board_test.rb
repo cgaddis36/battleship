@@ -31,10 +31,38 @@ class BoardTest <Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
 
-    assert_equal false, board.valid_placement(cruiser, ["A1","A2"])
-    assert_equal false, board.valid_placement(submarine, ["A1","A2", "A4"])
+    assert_equal false, board.valid_placement?(cruiser, ["A1","A2"])
+    assert_equal false, board.valid_placement?(submarine, ["A1","A2", "A4"])
   end
 
+  def test_rows_and_columns
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.valid_placement?(submarine, ["A1","A2"])
+
+    assert_equal 2, board.rows.count
+  end
+
+  def test_columns_sorted
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.valid_placement?(submarine, ["A1","A2"])
+    board.valid_placement?(cruiser, ["B1","B2","B3"])
+
+    assert_equal 2, board.rows_sorted.count
+  end
+
+  def test_directional_placement
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.valid_placement?(submarine, ["A1","A2"])
+    board.valid_placement?(cruiser, ["B1","B2","B3"])
+
+    # assert_equal true,
+  end
 
 
 end

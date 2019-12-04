@@ -1,5 +1,5 @@
 class Board
-  attr_reader :cells
+  attr_reader :cells, :rows, :columns, :columns_sorted, :rows_sorted
 
   def initialize
     @cells = {
@@ -23,13 +23,15 @@ class Board
            @rows = []
            @columns = []
            @placement_coordinates = []
+           @columns_sorted = []
+           @rows_sorted = []
   end
 
   def valid_coordinate?(coordinate)
     @cells.has_key?(coordinate)
   end
 
-  def valid_placement(ship, coordinates = [])
+  def valid_placement?(ship, coordinates = [])
     return false if coordinates.length != ship.length
       @placement_coordinates = coordinates
       coordinates.all? do |coordinate|
@@ -39,5 +41,10 @@ class Board
         @rows << coordinate.slice(0)
         @columns << coordinate.slice(1)
       end
+      @rows_sorted = @rows.sort
+      @columns_sorted = @columns.sort
+      require "pry"; binding.pry
+      end
+      @columns_sorted.max == @columns_sorted.min
+      require "pry"; binding.pry
     end
-end
