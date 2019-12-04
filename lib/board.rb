@@ -1,5 +1,6 @@
+require 'pry'
 class Board
-  attr_reader :cells
+  attr_reader :cells, :rows, :columns, :placement_coordinates
 
   def initialize
     @cells = {
@@ -20,6 +21,9 @@ class Board
           "D3" => Cell.new("D3"),
           "D4" => Cell.new("D4"),
           }
+    @columns = []
+    @rows = []
+    @placement_coordinates = []
   end
 
   def valid_coordinate?(coordinate)
@@ -27,12 +31,23 @@ class Board
   end
 
   def valid_placement(ship, coordinates = [])
+
     return false if coordinates.length != ship.length
+      @placement_coordinates = coordinates
 
       coordinates.all? do |coordinate|
         valid_coordinate?(coordinate)
       end
-      #this covers the first two validations, need to talk about best way to validatate
+# binding.pry
+      @placement_coordinates.each do |coordinate|
+          @rows << coordinate.slice(1)
+          @columns << coordinate.slice(0)
+      end
+
+# binding.pry
+
+
+
       #
   end
 
