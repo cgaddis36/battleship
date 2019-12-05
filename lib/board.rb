@@ -34,41 +34,43 @@ class Board
 
   def valid_placement?(ship, coordinates = [])
       @placement_coordinates = coordinates
+      @rows = []
+      @columns = []
     return false if coordinates.length != ship.length
 
       @placement_coordinates.all? do |coordinate|
         valid_coordinate?(coordinate)
       end
       consecutive_method
+      no_diagonals
   end
 
   def consecutive_method
     @placement_coordinates.each do |coordinate|
-        columns << coordinate.slice(1)
-        rows << coordinate.slice(0)
+        @columns << coordinate.slice(1)
+        @rows << coordinate.slice(0)
     end
-    columns_sorted = columns.sort
+
+    columns_sorted = @columns.sort
       x = columns_sorted[0]
       y = columns_sorted[-1]
     column_range_array = (x..y).to_a
 
-     rows_sorted = rows.sort
+     rows_sorted = @rows.sort
       a = rows_sorted[0]
       b = rows_sorted[-1]
     rows_range_array = (a..b).to_a
 
-    return false if columns.sort != column_range_array &&
-                    rows.sort != rows_range_array
-    return false if columns.sort == column_range_array &&
-                    rows.sort == rows_range_array
+    return false if @columns.sort != column_range_array &&
+                    @rows.sort != rows_range_array
+    return false if @columns.sort == column_range_array &&
+                    @rows.sort == rows_range_array
       else
         true
       end
   end
-# @columns.all? do |num|
-#  num == @columns[0]
-#  end
-#  ||
-#  @rows.all? do |letter|
-#    letter == @rows[0]
-#  end
+
+  def no_diagonals
+    # binding.pry
+    @rows.uniq.length == 1 ||@columns.uniq.length == 1
+  end
