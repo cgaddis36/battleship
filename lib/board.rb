@@ -60,15 +60,28 @@ class Board
       a = rows_sorted[0]
       b = rows_sorted[-1]
     rows_range_array = (a..b).to_a
+binding.pry
+    return false if columns_sorted != column_range_array &&
+                    rows_sorted != rows_range_array
+    return false if columns_sorted == column_range_array &&
+                    rows_sorted == rows_range_array
+    if rows_sorted.uniq != 1 && rows_sorted == rows_range_array
 
-    return false if @columns.sort != column_range_array &&
-                    @rows.sort != rows_range_array
-    return false if @columns.sort == column_range_array &&
-                    @rows.sort == rows_range_array
-      else
-        true
-      end
+    columns_sorted.uniq != 1 && columns_sorted == column_range_array
+
   end
+
+
+
+
+
+
+                    # binding.pry
+    # return true if  columns_sorted == column_range_array ||
+    #                 rows_sorted == rows_range_array
+        # binding.pry
+
+
 
   def no_diagonals
     # binding.pry
