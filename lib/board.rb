@@ -22,10 +22,9 @@ class Board
           "D4" => Cell.new("D4"),
           }
     @columns = []
-
     @rows = []
-
     @placement_coordinates = []
+    @consecutive = false
   end
 
   def valid_coordinate?(coordinate)
@@ -54,68 +53,48 @@ class Board
     @placement_coordinates.each do |coordinate|
         @columns << coordinate.slice(1)
         @rows << coordinate.slice(0)
-        # binding.pry
+    end
+    rows_good?
+    columns_good?
+    @consecutive = @columns_good == true && @rows_good == true
     end
 
+  def rows_good?
     rows_sorted = @rows.sort.uniq
       a = rows_sorted[0]
       b = rows_sorted[-1]
     rows_range_array = (a..b).to_a
 
     ord_rows_sorted = []
-
     rows_sorted.each do |letter|
       ord_rows_sorted << letter.ord
     end
 
-rows_sorted_ctally = ord_rows_sorted[0]
+    rows_sorted_ctally = ord_rows_sorted[0]
 
-ord_rows_sorted.all? do |num|
-  num + 1 == rows_sorted_ctally += 1
-end
+    @rows_good = ord_rows_sorted.all? do |num|
+      num + 1 == rows_sorted_ctally += 1
+    end
+  end
 
-
-
-    # if rows_sorted.length == 1
-    #     rows_good = true
-    # elsif
-    #     rows_sorted == rows_range_array
-    #     rows_good = true
-    # else
-    #     rows_good = false
-    # end
-
+  def columns_good?
     columns_sorted = @columns.sort.uniq
       x = columns_sorted[0]
       y = columns_sorted[-1]
     column_range_array = (x..y).to_a
 
-columns_sorted_ctally = columns_sorted[0]
+    ord_columns_sorted = []
+    columns_sorted.each do |string|
+      ord_columns_sorted << string.ord
+    end
 
-        columns_sorted.all? do |num|
-          num + 1 == columns_sorted_ctally += 1
-        end
+    columns_sorted_ctally = ord_columns_sorted[0]
 
-    # if columns_sorted.length == 1
-    #     columns_good = true
-    #   elsif
-    #     columns_sorted == column_range_array
-    #     columns_good = true
-    #   else
-    #     columns_good = false
-    # end
-    #
-    # return false if rows_good != true || columns_good != true
+    @columns_good = ord_columns_sorted.all? do |num|
+      num + 1 == columns_sorted_ctally += 1
+    end
+
   end
-
-
-
-  def no_diagonals
-    if @rows.uniq.length == 1
-      @columns.uniq.length == 1
-  end
-
-
 end
 # return false if columns_sorted != column_range_array &&
 #                 rows_sorted != rows_range_array
@@ -124,3 +103,17 @@ end
 # if rows_sorted.uniq != 1 && rows_sorted == rows_range_array
 #
 # # columns_sorted.uniq != 1 && columns_sorted == column_range_array
+# if columns_sorted.length == 1
+#     columns_good = true
+#   elsif
+#     columns_sorted == column_range_array
+#     columns_good = true
+#   else
+#     columns_good = false
+# end
+#
+# return false if rows_good != true || columns_good != true
+#   def no_diagonals
+#   if @rows.uniq.length == 1
+#     @columns.uniq.length == 1
+# end
