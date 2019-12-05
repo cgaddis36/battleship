@@ -43,7 +43,7 @@ class Board
       @columns = []
     return false if coordinates.length != ship.length
 
-    all_valid? && consecutive?
+    all_valid? && consecutive? && diagonal?
 
   end
 
@@ -78,17 +78,17 @@ class Board
       x = columns_sorted[0]
       y = columns_sorted[-1]
     column_range_array = (x..y).to_a
-
     ord_columns_sorted = []
     columns_sorted.each do |string|
       ord_columns_sorted << string.ord
     end
-
     columns_sorted_ctally = ord_columns_sorted[0]
-
     @columns_values_consecutive_or_same = ord_columns_sorted.all? do |num|
       num + 1 == columns_sorted_ctally += 1
     end
-
+  end
+  def diagonal?
+    @columns.max == @columns.min ||
+    @rows.max == @rows.min
   end
 end
