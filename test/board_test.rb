@@ -26,30 +26,24 @@ class BoardTest <Minitest::Test
     assert_equal false, board.valid_coordinate?("A22")
   end
 
-  def test_if_board_can_check_for_valid_ship_placement
+  def test_if_board_can_check_for_valid_ship_placement_by_size
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
 
-    assert_equal true, board.valid_placement(cruiser, ["A1","A2", "A4"])
+    assert_equal false, board.valid_placement?((cruiser), ["A1","A2"])
+    assert_equal false, board.valid_placement?((submarine), ["A1","A2","A4"])
 end
 
+  def test_if_board_can_check_for_consecutive_placement
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    assert_equal true, board.valid_placement?((submarine), ["A1","A2"])
+    assert_equal false, board.valid_placement?((cruiser), ["A1","A2","A4"])
+    assert_equal true, board.valid_placement?((submarine), ["A1","B1"])
+    assert_equal false, board.valid_placement?((cruiser), ["A1", "B1", "D1"])
+  end
 
 end
