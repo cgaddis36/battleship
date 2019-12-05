@@ -23,8 +23,7 @@ class Board
            @rows = []
            @columns = []
            @placement_coordinates = []
-           @columns_sorted = []
-           @rows_sorted = []
+
   end
 
   def valid_coordinate?(coordinate)
@@ -41,10 +40,6 @@ class Board
         @rows << coordinate.slice(0)
         @columns << coordinate.slice(1)
       end
-      @rows_sorted = @rows.sort
-      @columns_sorted = @columns.sort
-      require "pry"; binding.pry
-      end
-      @columns_sorted.max == @columns_sorted.min
-      require "pry"; binding.pry
+      (@rows.uniq.length == @rows.length)||(@columns.uniq.length == @columns.length)
     end
+  end
