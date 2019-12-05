@@ -40,9 +40,6 @@ class BoardTest <Minitest::Test
     assert_equal 2, board.rows.count
   end
 
-  def test_case_name
-    
-  end
 
   def test_directional_placement
     board = Board.new
