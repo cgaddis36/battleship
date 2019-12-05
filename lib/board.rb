@@ -33,51 +33,42 @@ class Board
   end
 
   def valid_placement?(ship, coordinates = [])
-
+      @placement_coordinates = coordinates
     return false if coordinates.length != ship.length
-    
 
-      coordinates.all? do |coordinate|
+      @placement_coordinates.all? do |coordinate|
         valid_coordinate?(coordinate)
       end
-# binding.pry
-      @placement_coordinates.each do |coordinate|
-          @columns << coordinate.slice(1)
-          @rows << coordinate.slice(0)
-      end
-
-       @columns.all? do |num|
-        num == @columns[0]
-        end
-        ||
-        @rows.all? do |letter|
-          letter == @rows[0]
-        end
-
-
-
-
-    columns_sorted = @columns.sort
-    rows_sorted = @rows.sort
-      x = columns_sorted[0]
-      y = columns_sorted[-1]
-      column_range_array = (x..y).to_a
-      binding.pry
-       if column_range_array == @columns_sorted
-         true
-       else
-         false
-      # if column_range.length == @columns.length
-      a = rows_sorted[0]
-      b = rows_sorted[-1]
-      row_range_array = (a..b).to_a
-      binding.pry
-
-#EITHER ROW OR COLUMN will be consecutive
-
-
-
-      #
+      consecutive_method
   end
 
-end
+  def consecutive_method
+    @placement_coordinates.each do |coordinate|
+        columns << coordinate.slice(1)
+        rows << coordinate.slice(0)
+    end
+    columns_sorted = columns.sort
+      x = columns_sorted[0]
+      y = columns_sorted[-1]
+    column_range_array = (x..y).to_a
+
+     rows_sorted = rows.sort
+      a = rows_sorted[0]
+      b = rows_sorted[-1]
+    rows_range_array = (a..b).to_a
+
+    return false if columns.sort != column_range_array &&
+                    rows.sort != rows_range_array
+    return false if columns.sort == column_range_array &&
+                    rows.sort == rows_range_array
+      else
+        true
+      end
+  end
+# @columns.all? do |num|
+#  num == @columns[0]
+#  end
+#  ||
+#  @rows.all? do |letter|
+#    letter == @rows[0]
+#  end
