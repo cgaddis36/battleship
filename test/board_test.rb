@@ -31,13 +31,20 @@ class BoardTest <Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
 
-    board.valid_placement(cruiser, ["A1","A2","A4"])
-
-# binding.pry
-    assert_equal true, board.valid_placement(cruiser, ["A1","A2", "A4"])
+    assert_equal false, board.valid_placement?((cruiser), ["A1","A2"])
+    assert_equal false, board.valid_placement?((submarine), ["A1","A2","A4"])
+    board.valid_placement?((submarine), ["A1","A2"])
 end
 
+  def test_if_board_can_check_for_consecutive_placement
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
+    assert_equal false, board.valid_placement?((submarine), ["A1","A2"])
+    assert_equal false, board.valid_placement?((cruiser), ["A1","A2","A4"])
+    board.valid_placement?((submarine), ["A1","A2"])
+  end
 
 
 
