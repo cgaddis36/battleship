@@ -44,7 +44,7 @@ class Board
       @rows = []
       @columns = []
     return false if coordinates.length != ship.length
-    all_valid? && consecutive? && diagonal?
+    all_valid? && consecutive? && diagonal? && empty_cell?
   end
 
   def consecutive?
@@ -94,14 +94,22 @@ class Board
   end
 
   def place(ship, coordinates = [])
+    # return false if valid_placement? == false
     coordinates.each do |key|
       cell = @cells[key]
         cell.place_ship(ship)
     end
   end
 
-  # def no_overlap?(coordinate)
-  #   @placement_coordinates.include?(coordinate)
-  # end
+  def empty_cell?
+    @placement_coordinates.all? do |key|
+      cell = @cells[key]
+        cell.ship == nil
+      end
+  end
+
+  def no_overlap?(coordinate)
+    @placement_coordinates.include?(coordinate)
+  end
 
 end
