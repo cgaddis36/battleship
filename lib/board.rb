@@ -56,25 +56,29 @@ class Board
     end
 
   def row_values_consecutive_or_same?
-    rows_sorted = @rows.sort.uniq
+    return false if @rows.uniq.sort != @rows.uniq
+    rows_sorted = @rows.uniq
       a = rows_sorted[0]
       b = rows_sorted[-1]
     rows_range_array = (a..b).to_a
-
+# binding.pry
     ord_rows_sorted = []
     rows_sorted.each do |letter|
       ord_rows_sorted << letter.ord
+# binding.pry
     end
 
     rows_sorted_ctally = ord_rows_sorted[0]
-
+# binding.pry
     @row_values_consecutive_or_same = ord_rows_sorted.all? do |num|
       num + 1 == rows_sorted_ctally += 1
+      # binding.pry
     end
   end
 
   def columns_values_consecutive_or_same?
-    columns_sorted = @columns.sort.uniq
+    return false if @columns.uniq.sort != @columns.uniq
+    columns_sorted = @columns.uniq
       x = columns_sorted[0]
       y = columns_sorted[-1]
     column_range_array = (x..y).to_a
@@ -91,4 +95,12 @@ class Board
     @columns.max == @columns.min ||
     @rows.max == @rows.min
   end
+
+  def place(ship, coordinates = [])
+     coordinates.each do |name|
+
+
+
+
+
 end
