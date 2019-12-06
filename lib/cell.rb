@@ -1,7 +1,7 @@
 require './lib/ship'
 
 class Cell
-  attr_reader :coordinate, :ship
+  attr_accessor :coordinate, :ship
 
   def initialize(coordinate, ship = nil)
     @coordinate = coordinate
@@ -29,7 +29,6 @@ class Cell
 
   def render(see = false)
     return "S" if see == true && @ship != nil
-
       if @fired_upon == false
         "."
       elsif @ship == nil
@@ -40,6 +39,4 @@ class Cell
         "X"
     end
   end
-
-
 end

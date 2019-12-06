@@ -1,5 +1,6 @@
 class Ship
-  attr_reader :name, :length, :health, :sunk
+  attr_reader :name, :length
+  attr_accessor :health, :sunk
 
   def initialize(name, length)
     @name = name
@@ -17,5 +18,4 @@ class Ship
   def sunk?
     @health == 0
   end
-
 end
