@@ -44,7 +44,7 @@ class Board
       @rows = []
       @columns = []
     return false if coordinates.length != ship.length
-    all_valid? && consecutive? && diagonal?
+    all_valid? && consecutive? && diagonal? && empty_cell?
   end
 
   def consecutive?
@@ -56,22 +56,26 @@ class Board
   end
 
   def row_values_consecutive_or_same?
-    rows_sorted = @rows.sort.uniq
+    return false if @rows.uniq.sort != @rows.uniq
+    rows_sorted = @rows.uniq
       a = rows_sorted[0]
       b = rows_sorted[-1]
     rows_range_array = (a..b).to_a
     ord_rows_sorted = []
     rows_sorted.each do |letter|
       ord_rows_sorted << letter.ord
+# binding.pry
     end
     rows_sorted_ctally = ord_rows_sorted[0]
     @row_values_consecutive_or_same = ord_rows_sorted.all? do |num|
       num + 1 == rows_sorted_ctally += 1
+      # binding.pry
     end
   end
 
   def columns_values_consecutive_or_same?
-    columns_sorted = @columns.sort.uniq
+    return false if @columns.uniq.sort != @columns.uniq
+    columns_sorted = @columns.uniq
       x = columns_sorted[0]
       y = columns_sorted[-1]
     column_range_array = (x..y).to_a
@@ -90,14 +94,22 @@ class Board
   end
 
   def place(ship, coordinates = [])
+    # return false if valid_placement? == false
     coordinates.each do |key|
       cell = @cells[key]
         cell.place_ship(ship)
     end
   end
 
-  # def no_overlap?(coordinate)
-  #   @placement_coordinates.include?(coordinate)
-  # end
+  def empty_cell?
+    @placement_coordinates.all? do |key|
+      cell = @cells[key]
+        cell.ship == nil
+      end
+  end
+
+  def no_overlap?(coordinate)
+    @placement_coordinates.include?(coordinate)
+  end
 
 end
