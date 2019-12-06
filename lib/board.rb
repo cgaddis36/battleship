@@ -1,8 +1,14 @@
 require 'pry'
+require './lib/cell'
+require './lib/ship'
 class Board
   attr_reader :cells, :rows, :columns, :placement_coordinates
 
   def initialize
+    @columns = []
+    @rows = []
+    @placement_coordinates = []
+    @consecutive = false
     @cells = {
           "A1" => Cell.new("A1"),
           "A2" => Cell.new("A2"),
@@ -21,10 +27,6 @@ class Board
           "D3" => Cell.new("D3"),
           "D4" => Cell.new("D4"),
           }
-    @columns = []
-    @rows = []
-    @placement_coordinates = []
-    @consecutive = false
   end
 
   def valid_coordinate?(coordinate)
@@ -42,32 +44,27 @@ class Board
       @rows = []
       @columns = []
     return false if coordinates.length != ship.length
-
     all_valid? && consecutive? && diagonal?
-
   end
 
   def consecutive?
     @placement_coordinates.each do |coordinate|
-        @columns << coordinate.slice(1)
+      @columns << coordinate.slice(1)
         @rows << coordinate.slice(0)
     end
     columns_values_consecutive_or_same? && row_values_consecutive_or_same?
-    end
+  end
 
   def row_values_consecutive_or_same?
     rows_sorted = @rows.sort.uniq
       a = rows_sorted[0]
       b = rows_sorted[-1]
     rows_range_array = (a..b).to_a
-
     ord_rows_sorted = []
     rows_sorted.each do |letter|
       ord_rows_sorted << letter.ord
     end
-
     rows_sorted_ctally = ord_rows_sorted[0]
-
     @row_values_consecutive_or_same = ord_rows_sorted.all? do |num|
       num + 1 == rows_sorted_ctally += 1
     end
@@ -91,4 +88,16 @@ class Board
     @columns.max == @columns.min ||
     @rows.max == @rows.min
   end
+
+  def place(ship, coordinates = [])
+    coordinates.each do |key|
+      cell = @cells[key]
+        cell.place_ship(ship)
+    end
+  end
+
+  # def no_overlap?(coordinate)
+  #   @placement_coordinates.include?(coordinate)
+  # end
+
 end
