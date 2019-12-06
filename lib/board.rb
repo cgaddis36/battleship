@@ -44,7 +44,7 @@ class Board
       @rows = []
       @columns = []
     return false if coordinates.length != ship.length
-    all_valid? && consecutive? && diagonal?
+    all_valid? && consecutive? && diagonal? && cant_overlap?
   end
 
   def consecutive?
@@ -96,8 +96,11 @@ class Board
     end
   end
 
-  # def no_overlap?(coordinate)
-  #   @placement_coordinates.include?(coordinate)
-  # end
+  def cant_overlap?(coordinates = [])
+    @placement_coordinates.uniq.length == @placement_coordinates.length
+  end 
 
+  # def cant_overlap?(coordinates = [])
+  #   @placement_coordinates.include?(coordinates)
+  # end
 end
