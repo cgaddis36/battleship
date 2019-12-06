@@ -29,7 +29,6 @@ class Cell
 
   def render(see = false)
     return "S" if see == true && @ship != nil
-
       if @fired_upon == false
         "."
       elsif @ship == nil
@@ -40,6 +39,4 @@ class Cell
         "X"
     end
   end
-
-
 end

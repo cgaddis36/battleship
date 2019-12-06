@@ -44,11 +44,7 @@ class Board
       @rows = []
       @columns = []
     return false if coordinates.length != ship.length
-<<<<<<< HEAD
-    all_valid? && consecutive? && diagonal? && cant_overlap?
-=======
     all_valid? && consecutive? && diagonal? && empty_cell?
->>>>>>> 17c93e2b3580c4a50e25f7b5200c974dda3022c9
   end
 
   def consecutive?
@@ -68,23 +64,21 @@ class Board
     ord_rows_sorted = []
     rows_sorted.each do |letter|
       ord_rows_sorted << letter.ord
-# binding.pry
     end
     rows_sorted_ctally = ord_rows_sorted[0]
     @row_values_consecutive_or_same = ord_rows_sorted.all? do |num|
       num + 1 == rows_sorted_ctally += 1
-      # binding.pry
     end
   end
 
   def columns_values_consecutive_or_same?
     return false if @columns.uniq.sort != @columns.uniq
-    columns_sorted = @columns.uniq
+      columns_sorted = @columns.uniq
       x = columns_sorted[0]
       y = columns_sorted[-1]
-    column_range_array = (x..y).to_a
-    ord_columns_sorted = []
-    columns_sorted.each do |string|
+      column_range_array = (x..y).to_a
+      ord_columns_sorted = []
+      columns_sorted.each do |string|
       ord_columns_sorted << string.ord
     end
     columns_sorted_ctally = ord_columns_sorted[0]
@@ -98,7 +92,6 @@ class Board
   end
 
   def place(ship, coordinates = [])
-    # return false if valid_placement? == false
     coordinates.each do |key|
       cell = @cells[key]
         cell.place_ship(ship)
@@ -116,4 +109,11 @@ class Board
     @placement_coordinates.include?(coordinate)
   end
 
+  def render(see = false)
+    " 1 2 3 4 \n" +
+    "A #{@cells["A1"].render(see)} #{@cells["A2"].render(see)} #{@cells["A3"].render(see)} #{@cells["A4"].render(see)} \n" +
+    "B #{@cells["B1"].render(see)} #{@cells["B2"].render(see)} #{@cells["B3"].render(see)} #{@cells["B4"].render(see)} \n" +
+    "C #{@cells["C3"].render(see)} #{@cells["C3"].render(see)} #{@cells["C3"].render(see)} #{@cells["C4"].render(see)} \n" +
+    "D #{@cells["D1"].render(see)} #{@cells["D2"].render(see)} #{@cells["D3"].render(see)} #{@cells["D4"].render(see)} \n" 
+  end
 end
