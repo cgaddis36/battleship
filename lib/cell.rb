@@ -1,16 +1,16 @@
 require './lib/ship'
 
 class Cell
-  attr_accessor :coordinate, :ship
+  attr_accessor :coordinate, :ship, :fired_upon
 
-  def initialize(coordinate, ship = nil)
+  def initialize(coordinate, ship = 0)
     @coordinate = coordinate
-    @ship = ship
+    @ship = 0
     @fired_upon = false
   end
 
   def empty?
-    @ship == nil
+    @ship == 0
   end
 
   def place_ship(ship)
@@ -19,7 +19,7 @@ class Cell
 
   def fire_upon
     @fired_upon = true
-      return if @ship == nil
+      return if @ship == 0
     @ship.hit
   end
 
@@ -28,11 +28,10 @@ class Cell
   end
 
   def render(see = false)
-    return "S" if see == true && @ship != nil
-
+    return "S" if see == true && @ship != 0
       if @fired_upon == false
         "."
-      elsif @ship == nil
+      elsif @ship == 0
         "M"
       elsif @ship.health > 0
         "H"
@@ -40,6 +39,4 @@ class Cell
         "X"
     end
   end
-
-
 end
