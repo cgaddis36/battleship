@@ -1,0 +1,14 @@
+Thoughts:
+
+So, the player gives all 3 coordinates for a ship at once.  We might want to
+shovel them in an array.  The tests pass now if a player enters duplicate values
+so we need to address that.  We could iterate over that array to place cells
+after that.
+
+For the computer selected ship placement, we should keep in mind what Aurora
+said about the random number generator and use that in a separate method.
+So we need to find one that accepts the limits of our board values.
+
+Might be nice to make another instance variable @why_failed = "doubles" or
+"chosen cells not on board". and have it display with our invalid coordinate
+message to give our players a clue .

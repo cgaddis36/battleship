@@ -5,6 +5,7 @@ class Board
   attr_reader :cells, :rows, :columns, :placement_coordinates
 
   def initialize
+    @player_chosen_coordinates = []
     @columns = []
     @rows = []
     @placement_coordinates = []
@@ -104,6 +105,12 @@ class Board
         cell.ship == 0
       end
   end
+
+  def duplicate_coordinates?
+      @player_chosen_coordinates.none? do |coordinate|
+        @player_chosen_coordinates.include?(coordinate)
+      end
+    end
 
   def no_overlap?(coordinate)
     @placement_coordinates.include?(coordinate)
