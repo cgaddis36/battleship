@@ -3,8 +3,10 @@ require './lib/cell'
 require './lib/ship'
 class Board
   attr_reader :cells, :rows, :columns, :placement_coordinates
+  attr_accessor :player_supplied_coordinates
 
   def initialize
+    @player_supplied_coordinates = 0
     @columns = []
     @rows = []
     @placement_coordinates = []
@@ -27,6 +29,8 @@ class Board
           "D3" => Cell.new("D3"),
           "D4" => Cell.new("D4"),
           }
+    @cruiser= Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
   end
 
   def valid_coordinate?(coordinate)
@@ -36,15 +40,15 @@ class Board
   def all_valid?
     @placement_coordinates.all? do |coordinate|
       valid_coordinate?(coordinate)
+      no_overlap?(coordinate)
     end
   end
 
-  def valid_placement?(ship, coordinates = [])
-      @placement_coordinates = coordinates
+  def valid_placement?(ship, coordinates)
       @rows = []
       @columns = []
-    return false if coordinates.length != ship.length
-    all_valid? && consecutive? && diagonal? && empty_cell?  && no_overlap && duplicate_coordinates?
+    return false if @placement_coordinates.length != ship.length
+    all_valid? && consecutive? && diagonal? && duplicate_coordinates? && empty_cell
   end
 
   def consecutive?
@@ -145,8 +149,8 @@ class Board
         end
     end
 
-  def player_places_ships
-    puts  "I have laid out my ships on the grid.
+  def player_enters_coordinates
+    puts  "\n\n\n I have laid out my ships on the grid.
 You now need to lay out your two ships.
 The Cruiser is three units long and the Submarine is two units long.
   1 2 3 4
@@ -154,8 +158,16 @@ A . . . .
 B . . . .
 C . . . .
 D . . . .
-Enter the squares for the Cruiser (3 spaces):"
+Enter the squares for the Cruiser
+(format example: A1 A2 A3)
+enter 3 spaces):"
+@player_supplied_coordinates = gets.chomp
+binding.pry
 end
+
+  def split_player_supplied_coordinates
+    @placement_coordinates = @player_supplied_coordinates.split
+  end
 
 
     # def computer_places_ships
