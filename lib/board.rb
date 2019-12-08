@@ -5,7 +5,6 @@ class Board
   attr_reader :cells, :rows, :columns, :placement_coordinates
 
   def initialize
-    @player_chosen_coordinates = []
     @columns = []
     @rows = []
     @placement_coordinates = []
@@ -45,7 +44,7 @@ class Board
       @rows = []
       @columns = []
     return false if coordinates.length != ship.length
-    all_valid? && consecutive? && diagonal? && empty_cell?
+    all_valid? && consecutive? && diagonal? && empty_cell?  && no_overlap && duplicate_coordinates?
   end
 
   def consecutive?
@@ -107,8 +106,8 @@ class Board
   end
 
   def duplicate_coordinates?
-      @player_chosen_coordinates.none? do |coordinate|
-        @player_chosen_coordinates.include?(coordinate)
+      @placement_coordinates.none? do |coordinate|
+        @placement_coordinates.include?(coordinate)
       end
     end
 
@@ -131,4 +130,42 @@ class Board
       "D #{@cells["D1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render} \n"
       end
     end
+
+    def start
+      puts "Welcome to BATTLESHIP".center(40)
+      puts "Enter p to play. Enter q to quit.".center(40)
+        start_or_quit = gets.chomp.downcase
+        if start_or_quit == "q"
+          puts "See you next time!"
+        elsif
+          start_or_quit == "p"
+        else
+          puts "Oops, invalid entry."
+          start
+        end
+    end
+
+    # def computer_places_ships
+    #
+    # end
+    #
+    # def player_places_ships
+    #
+    # end
+    #
+    # def play
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   end
