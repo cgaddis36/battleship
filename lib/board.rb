@@ -31,6 +31,7 @@ class Board
           }
     @cruiser= Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @ship_size = 0
   end
 
   def valid_coordinate?(coordinate)
@@ -44,23 +45,29 @@ class Board
     end
   end
 
+  def right_number_of_coordinates?
+    @placement_coordinates.count == @ship_size
+  end
+
   def valid_placement?(ship, coordinates)
-      @rows = []
-      @columns = []
-    return false if @placement_coordinates.length != ship.length
-    all_valid? && consecutive? && diagonal? && duplicate_coordinates? && empty_cell
+      @placement_coordinates = coordinates
+      # binding.pry
+      @ship_size = ship.length
+    right_number_of_coordinates? && all_valid? && consecutive? && diagonal? && duplicate_coordinates? && empty_cell?
   end
 
   def consecutive?
     @placement_coordinates.each do |coordinate|
       @columns << coordinate.slice(1)
-        @rows << coordinate.slice(0)
+      @rows << coordinate.slice(0)
+      # binding.pry
     end
     columns_values_consecutive_or_same? && row_values_consecutive_or_same?
   end
 
   def row_values_consecutive_or_same?
     return false if @rows.uniq.sort != @rows.uniq
+    return true if @rows.uniq.count == 1
     rows_sorted = @rows.uniq
       a = rows_sorted[0]
       b = rows_sorted[-1]
@@ -70,13 +77,14 @@ class Board
       ord_rows_sorted << letter.ord
     end
     rows_sorted_ctally = ord_rows_sorted[0]
-    @row_values_consecutive_or_same = ord_rows_sorted.all? do |num|
+    ord_rows_sorted.all? do |num|
       num + 1 == rows_sorted_ctally += 1
     end
   end
 
   def columns_values_consecutive_or_same?
     return false if @columns.uniq.sort != @columns.uniq
+    return true if @columns.uniq.count == 1
     columns_sorted = @columns.uniq
       x = columns_sorted[0]
       y = columns_sorted[-1]
@@ -86,7 +94,7 @@ class Board
       ord_columns_sorted << string.ord
     end
     columns_sorted_ctally = ord_columns_sorted[0]
-    @columns_values_consecutive_or_same = ord_columns_sorted.all? do |num|
+    ord_columns_sorted.all? do |num|
       num + 1 == columns_sorted_ctally += 1
     end
   end
@@ -110,9 +118,7 @@ class Board
   end
 
   def duplicate_coordinates?
-      @placement_coordinates.none? do |coordinate|
-        @placement_coordinates.include?(coordinate)
-      end
+      @placement_coordinates.uniq.count == @placement_coordinates.count
     end
 
   def no_overlap?(coordinate)
@@ -149,20 +155,24 @@ class Board
         end
     end
 
-  def player_enters_coordinates
+  def player_enter_cruiser_squares_and_validates_them
     puts  "\n\n\n I have laid out my ships on the grid.
-You now need to lay out your two ships.
-The Cruiser is three units long and the Submarine is two units long.
-  1 2 3 4
-A . . . .
-B . . . .
-C . . . .
-D . . . .
-Enter the squares for the Cruiser
-(format example: A1 A2 A3)
-enter 3 spaces):"
-@player_supplied_coordinates = gets.chomp
-binding.pry
+    You now need to lay out your two ships.
+    The Cruiser is three units long and the Submarine is two units long.
+    1 2 3 4
+    A . . . .
+    B . . . .
+    C . . . .
+    D . . . .
+    Enter the squares for the Cruiser
+    (format example: A1 A2 A3)
+    enter 3 spaces):"
+    @player_supplied_coordinates = gets.chomp
+    binding.pry
+    split_player_supplied_coordinates
+    @placement_coordinates = coordinates
+    @cruiser = ship
+    valid_placement?(ship, coordinates)
 end
 
   def split_player_supplied_coordinates
