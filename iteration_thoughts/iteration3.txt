@@ -14,4 +14,6 @@ Might be nice to make another instance variable @why_failed = "doubles" or
 message to give our players a clue .
 
 Runner file should just include mostly methods called on classes. very little
-code.  
+code.
+
+need new class called turn?

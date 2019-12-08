@@ -145,11 +145,20 @@ class Board
         end
     end
 
+  def player_places_ships
+    puts  "I have laid out my ships on the grid.
+You now need to lay out your two ships.
+The Cruiser is three units long and the Submarine is two units long.
+  1 2 3 4
+A . . . .
+B . . . .
+C . . . .
+D . . . .
+Enter the squares for the Cruiser (3 spaces):"
+end
+
+
     # def computer_places_ships
-    #
-    # end
-    #
-    # def player_places_ships
     #
     # end
     #
