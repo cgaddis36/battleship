@@ -29,6 +29,7 @@ class Board
           "D3" => Cell.new("D3"),
           "D4" => Cell.new("D4"),
           }
+    @ship_size = 0
   end
 
   def valid_coordinate?(coordinate)
@@ -44,7 +45,7 @@ class Board
   def valid_placement?(ship, coordinates)
     return false if coordinates.include?(nil)
       @placement_coordinates = coordinates
-    (ship.length == coordinates.count) && all_valid? && empty_cell? && consecutive? && diagonal? && duplicate_coordinates?
+      (ship.length == coordinates.count) && all_valid? && empty_cell? && consecutive? && diagonal? && duplicate_coordinates?
   end
 
   def consecutive?
@@ -65,7 +66,7 @@ class Board
       ord_rows_sorted << letter.ord
     end
     rows_sorted_ctally = ord_rows_sorted[0]
-    @row_values_consecutive_or_same = ord_rows_sorted.all? do |num|
+    ord_rows_sorted.all? do |num|
       num + 1 == rows_sorted_ctally += 1
     end
   end
@@ -82,7 +83,7 @@ class Board
       ord_columns_sorted << string.ord
     end
     columns_sorted_ctally = ord_columns_sorted[0]
-    @columns_values_consecutive_or_same = ord_columns_sorted.all? do |num|
+    ord_columns_sorted.all? do |num|
       num + 1 == columns_sorted_ctally += 1
     end
   end
@@ -105,8 +106,8 @@ class Board
   end
 
   def duplicate_coordinates?
-    @placement_coordinates.uniq.count ==@placement_coordinates.count
-  end
+      @placement_coordinates.uniq.count == @placement_coordinates.count
+    end
 
   def render(show = false)
     if show == true
