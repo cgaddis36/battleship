@@ -29,8 +29,6 @@ class Board
           "D3" => Cell.new("D3"),
           "D4" => Cell.new("D4"),
           }
-    @cruiser= Ship.new("Cruiser", 3)
-    @submarine = Ship.new("Submarine", 2)
     @ship_size = 0
   end
 
@@ -97,18 +95,13 @@ class Board
 
   def place(ship, coordinates = [])
     coordinates.each do |key|
-      cell = @cells[key]
-        cell.place_ship(ship)
+      @cells[key].place_ship(ship)
     end
   end
 
   def empty_cell?
-    # binding.pry
     @placement_coordinates.all? do |key|
-      cell = @cells[key]
-      cell.ship == 0
-      # binding.pry
-        # cell.ship == 0
+      @cells[key].ship == 0
       end
   end
 

@@ -14,6 +14,8 @@ class Game
     @submarine = Ship.new("Submarine", 2)
     @board = Board.new
     @ship = 0
+    @cruiser_coordinates = []
+    @submarine_coordinates = []
   end
 
   def start
@@ -31,7 +33,7 @@ class Game
 
   end
 
-  def player_enter_cruiser_squares_and_validates_them
+  def player_enter_squares_and_validates_them
 
   puts  "\n\n\n I have laid out my ships on the grid.
   You now need to lay out your two ships.
@@ -52,7 +54,7 @@ def gets_position_input
     @ship = @submarine
     spaces = "2"
   end
-  puts "Enter the squares for the #{ship.name}
+  puts "Enter the squares for the #{@ship.name}
   (format example: A1 A2 A3)
   (enter #{spaces} spaces):"
   @player_supplied_coordinates = gets.chomp
@@ -62,12 +64,19 @@ end
   def check_coordinates
   split_player_supplied_coordinates
   coordinates = @board.placement_coordinates
-  @cruiser_coordinates = @board.placement_coordinates
+    if @ship = @cruiser
+      @cruiser_coordinates = coordinates
+    else
+      @submarine_coordinates = coordinates
+    end
   ship = @ship
     if @board.valid_placement?(ship, coordinates) == false
       input_error
     else
-      true
+      @board.place(ship, coordinates)
+    end
+    if @submarine_coordinates != 2
+      player_enter_squares_and_validates_them
     end
   end
 
