@@ -39,14 +39,13 @@ class Board
   def all_valid?
     @placement_coordinates.all? do |coordinate|
       valid_coordinate?(coordinate)
-      no_overlap?(coordinate)
     end
   end
 
   def valid_placement?(ship, coordinates)
     return false if coordinates.include?(nil)
       @placement_coordinates = coordinates
-      (ship.length == coordinates.count) && all_valid? && consecutive? && diagonal? && duplicate_coordinates? && empty_cell?
+      (ship.length == coordinates.count) && all_valid? && empty_cell? && consecutive? && diagonal? && duplicate_coordinates? 
   end
 
   def consecutive?
@@ -108,10 +107,6 @@ class Board
   def duplicate_coordinates?
       @placement_coordinates.uniq.count == @placement_coordinates.count
     end
-
-  def no_overlap?(coordinate)
-    @placement_coordinates.include?(coordinate)
-  end
 
   def render(show = false)
     if show == true
