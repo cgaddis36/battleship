@@ -45,23 +45,15 @@ class Board
     end
   end
 
-  def right_number_of_coordinates?
-    @placement_coordinates.count == @ship_size
-  end
-
   def valid_placement?(ship, coordinates)
+    return false if coordinates.include?(nil)
       @placement_coordinates = coordinates
-      # binding.pry
-      @ship_size = ship.length
-    right_number_of_coordinates? && all_valid? && consecutive? && diagonal? && duplicate_coordinates? && empty_cell?
+      (ship.length == coordinates.count) && all_valid? && consecutive? && diagonal? && duplicate_coordinates? && empty_cell?
   end
 
   def consecutive?
-    @placement_coordinates.each do |coordinate|
-      @columns << coordinate.slice(1)
-      @rows << coordinate.slice(0)
-      # binding.pry
-    end
+    @columns = @placement_coordinates.map {|coordinate| coordinate.slice(1)}
+    @rows = @placement_coordinates.map {|coordinate| coordinate.slice(0)}
     columns_values_consecutive_or_same? && row_values_consecutive_or_same?
   end
 
@@ -140,63 +132,5 @@ class Board
       "D #{@cells["D1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render} \n"
       end
     end
-
-    def start
-      puts "Welcome to BATTLESHIP".center(40)
-      puts "Enter p to play. Enter q to quit.".center(40)
-        start_or_quit = gets.chomp.downcase
-        if start_or_quit == "q"
-          puts "See you next time!"
-        elsif
-          start_or_quit == "p"
-        else
-          puts "Oops, invalid entry."
-          start
-        end
-    end
-
-  def player_enter_cruiser_squares_and_validates_them
-    puts  "\n\n\n I have laid out my ships on the grid.
-    You now need to lay out your two ships.
-    The Cruiser is three units long and the Submarine is two units long.
-    1 2 3 4
-    A . . . .
-    B . . . .
-    C . . . .
-    D . . . .
-    Enter the squares for the Cruiser
-    (format example: A1 A2 A3)
-    enter 3 spaces):"
-    @player_supplied_coordinates = gets.chomp
-    binding.pry
-    split_player_supplied_coordinates
-    @placement_coordinates = coordinates
-    @cruiser = ship
-    valid_placement?(ship, coordinates)
-end
-
-  def split_player_supplied_coordinates
-    @placement_coordinates = @player_supplied_coordinates.split
-  end
-
-
-    # def computer_places_ships
-    #
-    # end
-    #
-    # def play
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   end

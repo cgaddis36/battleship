@@ -41,7 +41,6 @@ class BoardTest <Minitest::Test
   def test_if_board_can_check_for_valid_ship_placement_by_size
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "A2", "A4"])
-    # binding.pry
     assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
     assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
     assert_equal false, @board.valid_placement?(@submarine, ["33", "A1"])
@@ -51,7 +50,7 @@ class BoardTest <Minitest::Test
 
   def test_if_board_can_check_for_consecutive_placement
     assert_equal true, @board.valid_placement?((@submarine), ["A1","A2"])
-    # binding.pry
+    assert_equal false, @board.valid_placement?((@submarine), ["A1","A1"])
     assert_equal false, @board.valid_placement?((@cruiser), ["A1","A2","A4"])
     assert_equal true, @board.valid_placement?((@submarine), ["A1","B1"])
     assert_equal false, @board.valid_placement?((@cruiser), ["A1", "B1", "D1"])
