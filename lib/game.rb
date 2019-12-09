@@ -39,29 +39,48 @@ class Game
   A . . . .
   B . . . .
   C . . . .
-  D . . . .
-  Enter the squares for the Cruiser
+  D . . . ."
+  gets_cruiser_position_input
+end
+
+def gets_cruiser_position_input
+  puts "Enter the squares for the Cruiser
   (format example: A1 A2 A3)
   (enter 3 spaces):"
   @player_supplied_coordinates = gets.chomp
+  check_coordinates
+end
+
+  def check_coordinates
   split_player_supplied_coordinates
   coordinates = @board.placement_coordinates
   ship = @cruiser
-  binding.pry
-  @board.valid_placement?(ship, coordinates)
-  @board.render
+  if @board.valid_placement?(ship, coordinates) == false
+    input_error
+  else
+    @board.render
+    binding.pry
   end
+end
 
   def split_player_supplied_coordinates
   @board.placement_coordinates = @player_supplied_coordinates.split
   end
 
-
-  # def computer_places_ships
-  #
-  # end
-  #
-  # def play
+  def input_error
+    puts "Those are invalid coordinates. Please try
+    again:"
+    @player_supplied_coordinates = gets.chomp
+    split_player_supplied_coordinates
+    coordinates = @board.placement_coordinates
+    ship = @cruiser
+    if @board.valid_placement?(ship, coordinates) == false
+      input_error
+    else
+      @board.render
+      binding.pry
+    end
+  end
 
 
 
