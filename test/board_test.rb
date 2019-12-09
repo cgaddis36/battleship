@@ -96,11 +96,5 @@ class BoardTest <Minitest::Test
     assert_equal "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n", @board.render(true)
   end
 
-  def test_gets_and_splits_player_coordinates_for_cruiser_and_puts_into_placement_coordinate_array
-    @board.player_supplied_coordinates = "A1 A2 A3"
-
-    @board.split_player_supplied_coordinates
-
-  assert_equal ["A1", "A2", "A3"], @board.placement_coordinates
-end
+  
 end

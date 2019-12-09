@@ -3,16 +3,17 @@ require './lib/cell'
 require './lib/board'
 
 class Game
-  attr_accessor :player1
+  attr_accessor :player1, :player_supplied_coordinates, :placement_coordinates
   attr_reader :player2
 
   def initialize(player1 = "Player One", player2 = "Computer")
     @player1 = player1
     @player2 = player2
-    @player_supplied_coordinates = 0
+    @player_supplied_coordinates = "0"
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
     @board = Board.new
+    @ship = 0
   end
 
   def start
@@ -40,13 +41,20 @@ class Game
   B . . . .
   C . . . .
   D . . . ."
-  gets_cruiser_position_input
+    gets_position_input
 end
 
-def gets_cruiser_position_input
-  puts "Enter the squares for the Cruiser
+def gets_position_input
+  if @cruiser_coordinates = []
+    @ship = @cruiser
+    spaces = "3"
+  else
+    @ship = @submarine
+    spaces = "2"
+  end
+  puts "Enter the squares for the #{ship.name}
   (format example: A1 A2 A3)
-  (enter 3 spaces):"
+  (enter #{spaces} spaces):"
   @player_supplied_coordinates = gets.chomp
   check_coordinates
 end
@@ -54,45 +62,32 @@ end
   def check_coordinates
   split_player_supplied_coordinates
   coordinates = @board.placement_coordinates
-  ship = @cruiser
-  if @board.valid_placement?(ship, coordinates) == false
-    input_error
-  else
-    @board.render
-    binding.pry
+  @cruiser_coordinates = @board.placement_coordinates
+  ship = @ship
+    if @board.valid_placement?(ship, coordinates) == false
+      input_error
+    else
+      true
+    end
   end
-end
 
   def split_player_supplied_coordinates
   @board.placement_coordinates = @player_supplied_coordinates.split
   end
 
   def input_error
+    ship = @ship
     puts "Those are invalid coordinates. Please try
     again:"
     @player_supplied_coordinates = gets.chomp
-    split_player_supplied_coordinates
-    coordinates = @board.placement_coordinates
-    ship = @cruiser
-    if @board.valid_placement?(ship, coordinates) == false
-      input_error
-    else
-      @board.render
-      binding.pry
-    end
+    check_coordinates
   end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  def gets_submarine_position_input
+    puts "Enter the squares for the Submarine
+    (format example: B1 B2)
+    (enter 2 spaces):"
+    @player_supplied_coordinates = gets.chomp
+    check_coordinates
   end
+end

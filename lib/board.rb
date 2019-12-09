@@ -3,7 +3,7 @@ require './lib/cell'
 require './lib/ship'
 class Board
   attr_reader :cells, :rows, :columns
-  attr_accessor :player_supplied_coordinates, :placement_coordinates
+  attr_accessor :placement_coordinates
 
   def initialize
 
@@ -103,9 +103,12 @@ class Board
   end
 
   def empty_cell?
+    # binding.pry
     @placement_coordinates.all? do |key|
       cell = @cells[key]
-        cell.ship == 0
+      cell.ship == 0
+      # binding.pry
+        # cell.ship == 0
       end
   end
 
