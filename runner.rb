@@ -7,5 +7,5 @@ require 'pry'
   game = Game.new
 
 game.start
-game.player_enter_cruiser_squares_and_validates_them
+game.player_enter_squares_and_validates_them
 # board.board.place(cruiser, board.placement_coordinates)

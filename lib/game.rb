@@ -23,7 +23,6 @@ class Game
     puts "Enter p to play. Enter q to quit.".center(40)
       start_or_quit = gets.chomp.downcase
       if start_or_quit == "q"
-        puts "See you next time!"
       elsif
         start_or_quit == "p"
       else
@@ -47,7 +46,7 @@ class Game
 end
 
 def gets_position_input
-  if @cruiser_coordinates = []
+  if @cruiser_coordinates == []
     @ship = @cruiser
     spaces = "3"
   else
@@ -64,10 +63,11 @@ end
   def check_coordinates
   split_player_supplied_coordinates
   coordinates = @board.placement_coordinates
-    if @ship = @cruiser
-      @cruiser_coordinates = coordinates
+    if @ship == @cruiser
+      @cruiser_coordinates = @board.placement_coordinates
+      binding.pry
     else
-      @submarine_coordinates = coordinates
+      @submarine_coordinates = @board.placement_coordinates
     end
   ship = @ship
     if @board.valid_placement?(ship, coordinates) == false
@@ -75,11 +75,11 @@ end
     else
       @board.place(ship, coordinates)
     end
-    if @submarine_coordinates != 2
+    if @submarine_coordinates == []
       player_enter_squares_and_validates_them
     end
   end
-
+##########
   def split_player_supplied_coordinates
   @board.placement_coordinates = @player_supplied_coordinates.split
   end
