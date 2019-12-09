@@ -1,3 +1,7 @@
+require './lib/ship'
+require './lib/cell'
+require './lib/board'
+
 class Game
   attr_accessor :player1
   attr_reader :player2
@@ -5,7 +9,12 @@ class Game
   def initialize(player1 = "Player One", player2 = "Computer")
     @player1 = player1
     @player2 = player2
+    @player_supplied_coordinates = 0
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
+    @board = Board.new
   end
+
   def start
     puts "Welcome to BATTLESHIP".center(40)
     puts "Enter p to play. Enter q to quit.".center(40)
@@ -18,9 +27,11 @@ class Game
         puts "Oops, invalid entry."
         start
       end
+
   end
 
   def player_enter_cruiser_squares_and_validates_them
+
   puts  "\n\n\n I have laid out my ships on the grid.
   You now need to lay out your two ships.
   The Cruiser is three units long and the Submarine is two units long.
@@ -31,17 +42,18 @@ class Game
   D . . . .
   Enter the squares for the Cruiser
   (format example: A1 A2 A3)
-  enter 3 spaces):"
+  (enter 3 spaces):"
   @player_supplied_coordinates = gets.chomp
-
   split_player_supplied_coordinates
-  @placement_coordinates = coordinates
-  @cruiser = ship
-  valid_placement?(ship, coordinates)
+  coordinates = @board.placement_coordinates
+  ship = @cruiser
+  binding.pry
+  @board.valid_placement?(ship, coordinates)
+  @board.render
   end
 
   def split_player_supplied_coordinates
-  @placement_coordinates = @player_supplied_coordinates.split
+  @board.placement_coordinates = @player_supplied_coordinates.split
   end
 
 

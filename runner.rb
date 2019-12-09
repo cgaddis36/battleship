@@ -1,13 +1,11 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-require './lib/game_play'
+require './lib/game'
 require 'pry'
 
-  board = Board.new
-  cruiser = Ship.new("Cruiser", 3)
-  submarine = Ship.new("Submarine", 2)
+  game = Game.new
 
-board.start
-board.player_enters_coordinates
-board.board.place(cruiser, board.placement_coordinates)
+game.start
+game.player_enter_cruiser_squares_and_validates_them
+# board.board.place(cruiser, board.placement_coordinates)

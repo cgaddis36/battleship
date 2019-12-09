@@ -2,11 +2,11 @@ require 'pry'
 require './lib/cell'
 require './lib/ship'
 class Board
-  attr_reader :cells, :rows, :columns, :placement_coordinates
-  attr_accessor :player_supplied_coordinates
+  attr_reader :cells, :rows, :columns
+  attr_accessor :player_supplied_coordinates, :placement_coordinates
 
   def initialize
-    @player_supplied_coordinates = 0
+
     @columns = []
     @rows = []
     @placement_coordinates = []
