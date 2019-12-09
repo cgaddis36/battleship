@@ -73,7 +73,7 @@ class Board
   def columns_values_consecutive_or_same?
     return false if @columns.uniq.sort != @columns.uniq
     return true if @columns.uniq.count == 1
-    columns_sorted = @columns.uniq
+      columns_sorted = @columns.uniq
       x = columns_sorted[0]
       y = columns_sorted[-1]
     column_range_array = (x..y).to_a

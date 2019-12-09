@@ -20,15 +20,15 @@ class Game
   end
 
   def start
-    puts "Welcome to BATTLESHIP".center(40)
+    puts "****------Welcome to BATTLESHIP------****".center(40)
     puts "Enter p to play. Enter q to quit.".center(40)
       start_or_quit = gets.chomp.downcase
       if start_or_quit == "q"
-
+        puts "Shutting down systems"
         exit
       elsif
         start_or_quit == "p"
-
+        puts "Starting Battleship!"
       else
         puts "Oops, invalid entry."
         start
@@ -36,7 +36,6 @@ class Game
   end
 
   def player_enter_squares_and_validates_them
-
   puts  "\n\n\n I have laid out my ships on the grid.
   You now need to lay out your two ships.
   The Cruiser is three units long and the Submarine is two units long.
@@ -76,6 +75,7 @@ end
       input_error
     else
       @board.place(ship, coordinates)
+      puts @board.render(true)
     end
     if @submarine_coordinates == []
       player_enter_squares_and_validates_them

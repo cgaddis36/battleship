@@ -28,8 +28,9 @@ class ComputerPlayer
   end
 
   def random_coordinate_select
-    
-    letter = @rows_ord.rand(65..68)
+
+    rand(65..68)
+letter = @rows_ord.
     number = board.columns.rand(1..4)
     @first_point = letter + number
   end
