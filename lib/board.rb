@@ -6,7 +6,6 @@ class Board
   attr_accessor :placement_coordinates
 
   def initialize
-
     @columns = []
     @rows = []
     @placement_coordinates = []
@@ -45,7 +44,7 @@ class Board
   def valid_placement?(ship, coordinates)
     return false if coordinates.include?(nil)
       @placement_coordinates = coordinates
-      (ship.length == coordinates.count) && all_valid? && empty_cell? && consecutive? && diagonal? && duplicate_coordinates? 
+      (ship.length == coordinates.count) && all_valid? && empty_cell? && consecutive? && diagonal? && duplicate_coordinates?
   end
 
   def consecutive?
@@ -87,12 +86,13 @@ class Board
       num + 1 == columns_sorted_ctally += 1
     end
   end
+
   def diagonal?
     @columns.max == @columns.min ||
     @rows.max == @rows.min
   end
 
-  def place(ship, coordinates = [])
+  def place(ship, coordinates)
     coordinates.each do |key|
       @cells[key].place_ship(ship)
     end
@@ -123,5 +123,4 @@ class Board
       "D #{@cells["D1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render} \n"
       end
     end
-
   end

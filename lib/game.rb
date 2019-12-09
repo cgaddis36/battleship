@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require 'pry'
 
 class Game
   attr_accessor :player1, :player_supplied_coordinates, :placement_coordinates
@@ -23,13 +24,15 @@ class Game
     puts "Enter p to play. Enter q to quit.".center(40)
       start_or_quit = gets.chomp.downcase
       if start_or_quit == "q"
+
+        exit
       elsif
         start_or_quit == "p"
+
       else
         puts "Oops, invalid entry."
         start
       end
-
   end
 
   def player_enter_squares_and_validates_them
@@ -65,7 +68,6 @@ end
   coordinates = @board.placement_coordinates
     if @ship == @cruiser
       @cruiser_coordinates = @board.placement_coordinates
-      binding.pry
     else
       @submarine_coordinates = @board.placement_coordinates
     end
@@ -79,7 +81,7 @@ end
       player_enter_squares_and_validates_them
     end
   end
-##########
+
   def split_player_supplied_coordinates
   @board.placement_coordinates = @player_supplied_coordinates.split
   end

@@ -20,7 +20,7 @@ class ComputerPlayer
   end
 
   def choose_ship_placement()
-    
+
   end
 
   def convert_rows_to_integers
@@ -28,8 +28,9 @@ class ComputerPlayer
   end
 
   def random_coordinate_select
-    letter = @rows_ord.rand(64..92)
-    number = board.columns.rand(0..5)
+    
+    letter = @rows_ord.rand(65..68)
+    number = board.columns.rand(1..4)
     @first_point = letter + number
   end
 
