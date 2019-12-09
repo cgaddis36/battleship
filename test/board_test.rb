@@ -20,17 +20,6 @@ class BoardTest <Minitest::Test
     @cell_8 = @board.cells["B4"]
   end
 
-  def setup
-    @board = Board.new
-    @cruiser = Ship.new("Cruiser", 3)
-    @submarine = Ship.new("Submarine", 2)
-
-    @cell_1 = @board.cells["A1"]
-    @cell_2 = @board.cells["A2"]
-    @cell_3 = @board.cells["A3"]
-    @cell_4 = @board.cells["C3"]
-  end
-
   def test_board_is_an_instance_of_board
     @board
     assert_instance_of Board, @board
@@ -54,18 +43,17 @@ class BoardTest <Minitest::Test
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "A2", "A4"])
     assert_equal true, @board.valid_placement?(@cruiser, ["A1", "A2", "A3"])
     assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
-    assert_equal false, @board.valid_placement?(@submarine, ["33", "A1"])
-    assert_equal false, @board.valid_placement?(@submarine, ["Zebra", "A3"])
-    assert_equal false, @board.valid_placement?(@cruiser, [nil, "A2", "A3"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "B1"])
   end
 
   def test_if_board_can_check_for_consecutive_placement
     assert_equal true, @board.valid_placement?((@submarine), ["A1","A2"])
+    assert_equal false, @board.valid_placement?((@submarine), ["A1", "A1"])
     assert_equal false, @board.valid_placement?((@cruiser), ["A1","A2","A4"])
     assert_equal true, @board.valid_placement?((@submarine), ["A1","B1"])
     assert_equal false, @board.valid_placement?((@cruiser), ["A1", "B1", "D1"])
     assert_equal false, @board.valid_placement?((@submarine), ["C1","B1"])
-    assert_equal false, @board.valid_placement?((@cruiser), ["A3", "A2", "A1"])
+    assert_equal false, @board.valid_placement?((@cruiser), ["A3", "B1", "C1"])
   end
 
   def test_if_board_can_check_for_diagonal_placement

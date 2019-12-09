@@ -4,6 +4,15 @@ require './lib/ship'
 require './lib/board'
 
 class User
-  def initialize(game)
-    @game = game
+  attr_reader :gameplay
+
+  def initialize(gameplay)
+    @gameplay = gameplay
+    @user = user
+    @board = Board.new
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine")
   end
+
+
+end

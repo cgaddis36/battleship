@@ -2,13 +2,15 @@ require 'pry'
 require './lib/cell'
 require './lib/ship'
 class Board
-  attr_reader :cells, :rows, :columns, :placement_coordinates
+  attr_reader :cells, :rows, :columns
+  attr_accessor :placement_coordinates
 
   def initialize
     @columns = []
     @rows = []
     @placement_coordinates = []
     @consecutive = false
+    @ship_size = 0
     @cells = {
           "A1" => Cell.new("A1"),
           "A2" => Cell.new("A2"),
@@ -39,24 +41,21 @@ class Board
     end
   end
 
-  def valid_placement?(ship, coordinates = [])
+  def valid_placement?(ship, coordinates)
+    return false if coordinates.include?(nil)
       @placement_coordinates = coordinates
-      @rows = []
-      @columns = []
-    return false if coordinates.length != ship.length
-    all_valid? && consecutive? && diagonal? && empty_cell?
+    (ship.length == coordinates.count) && all_valid? && empty_cell? && consecutive? && diagonal? && duplicate_coordinates?
   end
 
   def consecutive?
-    @placement_coordinates.each do |coordinate|
-      @columns << coordinate.slice(1)
-        @rows << coordinate.slice(0)
-    end
+    @columns = @placement_coordinates.map {|coordinate| coordinate.slice(1)}
+    @rows = @placement_coordinates.map {|coordinate| coordinate.slice(0)}
     columns_values_consecutive_or_same? && row_values_consecutive_or_same?
   end
 
   def row_values_consecutive_or_same?
     return false if @rows.uniq.sort != @rows.uniq
+    return true if @rows.uniq.count == 1
     rows_sorted = @rows.uniq
       a = rows_sorted[0]
       b = rows_sorted[-1]
@@ -73,6 +72,7 @@ class Board
 
   def columns_values_consecutive_or_same?
     return false if @columns.uniq.sort != @columns.uniq
+    return true if @columns.uniq.sort == 1
       columns_sorted = @columns.uniq
       x = columns_sorted[0]
       y = columns_sorted[-1]
@@ -86,27 +86,26 @@ class Board
       num + 1 == columns_sorted_ctally += 1
     end
   end
+
   def diagonal?
     @columns.max == @columns.min ||
     @rows.max == @rows.min
   end
 
-  def place(ship, coordinates = [])
+  def place(ship, coordinates)
     coordinates.each do |key|
-      cell = @cells[key]
-        cell.place_ship(ship)
+      @cells[key].place_ship(ship)
     end
   end
 
   def empty_cell?
     @placement_coordinates.all? do |key|
-      cell = @cells[key]
-        cell.ship == 0
+      @cells[key].ship == 0
       end
   end
 
-  def no_overlap?(coordinate)
-    @placement_coordinates.include?(coordinate)
+  def duplicate_coordinates?
+    @placement_coordinates.uniq.count ==@placement_coordinates.count
   end
 
   def render(show = false)
