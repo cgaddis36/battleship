@@ -1,19 +1,19 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require './lib/turn'
 require 'pry'
 
 class Game
-  attr_accessor :player1, :player_supplied_coordinates, :placement_coordinates
-  attr_reader :player2
+  attr_accessor :player1, :player_supplied_coordinates
+  attr_reader :player2, :placement_coordinates
 
-  def initialize(player1 = "Player One", player2 = "Computer")
-    @player1 = player1
-    @player2 = player2
+  def initialize
     @player_supplied_coordinates = "0"
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-    @board = Board.new
+    @player_board = Board.new
+    @computer_board = Board.new
     @ship = 0
     @cruiser_coordinates = []
     @submarine_coordinates = []
@@ -64,18 +64,19 @@ end
 
   def check_coordinates
   split_player_supplied_coordinates
-  coordinates = @board.placement_coordinates
+  coordinates = @player_board.placement_coordinates
     if @ship == @cruiser
-      @cruiser_coordinates = @board.placement_coordinates
+      @cruiser_coordinates = @player_board.placement_coordinates
     else
-      @submarine_coordinates = @board.placement_coordinates
+      @submarine_coordinates = @player_board.placement_coordinates
     end
   ship = @ship
-    if @board.valid_placement?(ship, coordinates) == false
+    if @player_board.valid_placement?(ship, coordinates) == false
       input_error
     else
-      @board.place(ship, coordinates)
-      puts @board.render(true)
+      @player_board.place(ship, coordinates)
+      puts "\n\n\n ----------- \n\n\n"
+      puts @player_board.render(true)
     end
     if @submarine_coordinates == []
       player_enter_squares_and_validates_them
@@ -83,7 +84,7 @@ end
   end
 
   def split_player_supplied_coordinates
-  @board.placement_coordinates = @player_supplied_coordinates.split
+  @player_board.placement_coordinates = @player_supplied_coordinates.split
   end
 
   def input_error
