@@ -102,4 +102,27 @@ end
     @player_supplied_coordinates = gets.chomp
     check_coordinates
   end
+
+  def player_take_turn
+    turn = Turn.new(guess)
+      turn.player_takes_turn
+      coordinate = turn.guess
+      return turn.turn_input_error_message if @board.cells[coordinate]
+      if @player_board[coordinate].fired_upon == false
+        @player_board[coordinate].fire_upon
+        @player_guesses << [coordinate]
+      elsif
+        @player_board[coordinate].fired_upon == true
+          turn.turn_input_error_message
+      end
+
+end
+
+
+      # turn.computer_takes_turn
+
+
+
+
+
 end

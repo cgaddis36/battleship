@@ -5,25 +5,30 @@ require './lib/game'
 require 'pry'
 
 class Turn
-  attr_accessor :player1
-  attr_reader :player2
+  attr_accessor :player1, :@player_guesses
+  attr_reader :player2, :guess
 
   def initialize(player1 = "Player One", player2 = "Computer")
     @player1 = player1
     @player2 = player2
-    @user_board = user_board
-    @user_guesses = []
+    @player_guesses = []
     @computer_guesses = []
-    @computer_board = computer_board
+    @guess = guess
   end
 
   def player_takes_turn
-puts "=============COMPUTER BOARD============="
-puts @computer_board.render
-puts "==============PLAYER BOARD=============="
-puts @player_board.render(true)
+    puts "=============COMPUTER BOARD============="
+  puts @computer_board.render
+  puts "==============PLAYER BOARD=============="
+  puts @player_board.render(true)
+  puts "Take a guess (input example: A4 )".center(40)
+  @guess = gets.chomp
+  
+end
 
-
+def turn_input_error_message
+  puts "Oops. You've hit this square. Please select another:"
+  @guess = gets.chomp
 
 
 #player enters coordinates
