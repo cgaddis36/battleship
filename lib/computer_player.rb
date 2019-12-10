@@ -11,7 +11,8 @@ class ComputerPlayer
   def initialize(name = "Computer")
     @name = name
     @rows_ord = []
-
+    @start_cell = 0
+    @direction = direction
   end
 
   def places_its_ships
@@ -29,11 +30,20 @@ class ComputerPlayer
 
   def random_coordinate_select
 
-    rand(65..68)
-letter = @rows_ord.
-    number = board.columns.rand(1..4)
-    @first_point = letter + number
+    row_rand = rand(65..68)
+    column_rand = rand(1..4)
+    @start_cell = row_rand.chr + column_rand.to_s
   end
 
-  def
+  def ship_orientation
+      if rand(1..2) == 1
+        @direction = vertical
+      else
+        @direction = horizontal
+      end
+
+
+
+
+
 end

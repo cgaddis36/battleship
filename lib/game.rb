@@ -2,6 +2,7 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/turn'
+require './lib/computer'
 require 'pry'
 
 class Game
@@ -15,8 +16,8 @@ class Game
     @player_board = Board.new
     @computer_board = Board.new
     @ship = 0
-    @cruiser_coordinates = []
-    @submarine_coordinates = []
+    @player_cruiser_coordinates = []
+    @player_submarine_coordinates = []
   end
 
   def start
@@ -48,7 +49,7 @@ class Game
 end
 
 def gets_position_input
-  if @cruiser_coordinates == []
+  if @player_cruiser_coordinates == []
     @ship = @cruiser
     spaces = "3"
   else
@@ -66,9 +67,9 @@ end
   split_player_supplied_coordinates
   coordinates = @player_board.placement_coordinates
     if @ship == @cruiser
-      @cruiser_coordinates = @player_board.placement_coordinates
+      @player_cruiser_coordinates = @player_board.placement_coordinates
     else
-      @submarine_coordinates = @player_board.placement_coordinates
+      @player_submarine_coordinates = @player_board.placement_coordinates
     end
   ship = @ship
     if @player_board.valid_placement?(ship, coordinates) == false
@@ -78,7 +79,7 @@ end
       puts "\n\n\n ----------- \n\n\n"
       puts @player_board.render(true)
     end
-    if @submarine_coordinates == []
+    if @player_submarine_coordinates == []
       player_enter_squares_and_validates_them
     end
   end
@@ -103,26 +104,20 @@ end
     check_coordinates
   end
 
-  def player_take_turn
-    turn = Turn.new(guess)
-      turn.player_takes_turn
-      coordinate = turn.guess
-      return turn.turn_input_error_message if @board.cells[coordinate]
-      if @player_board[coordinate].fired_upon == false
-        @player_board[coordinate].fire_upon
-        @player_guesses << [coordinate]
-      elsif
-        @player_board[coordinate].fired_upon == true
-          turn.turn_input_error_message
-      end
+  # def player_take_turn
+  #   turn = Turn.new(guess)
+  #     turn.player_takes_turn
+  #     coordinate = turn.guess
+  #     return turn.turn_input_error_message if @board.cells[coordinate]
+  #     if @player_board[coordinate].fired_upon == false
+  #       @player_board[coordinate].fire_upon
+  #       @player_guesses << [coordinate]
+  #     elsif
+  #       @player_board[coordinate].fired_upon == true
+  #         turn.turn_input_error_message
+  #     end
 
 end
 
 
       # turn.computer_takes_turn
-
-
-
-
-
-end

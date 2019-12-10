@@ -23,12 +23,17 @@ class Turn
   puts @player_board.render(true)
   puts "Take a guess (input example: A4 )".center(40)
   @guess = gets.chomp
-  
+
 end
 
 def turn_input_error_message
   puts "Oops. You've hit this square. Please select another:"
   @guess = gets.chomp
+end
+
+
+
+
 
 
 #player enters coordinates
@@ -38,7 +43,7 @@ def turn_input_error_message
 #record guesses in array? do we need to save them if cell values change?
 #computer's turn if ships not sunk.
 #if all ships sunk, game over
-  end
+
 
   def computer_takes_turn
     #computer enters random coordinate
@@ -62,14 +67,14 @@ def turn_input_error_message
 
 
 end
-Turn:
-
-User board is displayed showing hits, misses, sunken ships, and ships
-Computer board is displayed showing hits, misses, and sunken ships
-Computer chooses a random shot
-Computer does not fire on the same spot twice
-User can choose a valid coordinate to fire on
-Entering invalid coordinate prompts user to enter valid coordinate
-Both computer and player shots are reported as a hit, sink, or miss
-User is informed when they have already fired on a coordinate
-Board is updated after a turn
+# Turn:
+#
+# User board is displayed showing hits, misses, sunken ships, and ships
+# Computer board is displayed showing hits, misses, and sunken ships
+# Computer chooses a random shot
+# Computer does not fire on the same spot twice
+# User can choose a valid coordinate to fire on
+# Entering invalid coordinate prompts user to enter valid coordinate
+# Both computer and player shots are reported as a hit, sink, or miss
+# User is informed when they have already fired on a coordinate
+# Board is updated after a turn
