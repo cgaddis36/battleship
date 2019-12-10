@@ -11,7 +11,7 @@ class ComputerTest <Minitest::Test
 
   def setup
 
-  @game = Game.new("Player One")
+  @game = Game.new
   @board = Board.new
   @computer = Computer.new
   @cruiser = Ship.new("Cruiser", 3)
@@ -23,25 +23,13 @@ class ComputerTest <Minitest::Test
     assert_equal true, @board.valid_coordinate?(@computer.start_cell)
   end
 
+def test_ship_orientation_gives_direction
+  @computer.ship_orientation
 
-
-
+  possible_outcomes = ["vertical", "horizontal"]
+  assert_equal true, possible_outcomes.includes?(@computer.direction)
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
