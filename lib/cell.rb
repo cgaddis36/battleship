@@ -19,7 +19,7 @@ class Cell
 
   def fire_upon
     @fired_upon = true
-      return if @ship == 0
+    return if @ship == 0
     @ship.hit
   end
 
