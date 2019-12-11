@@ -25,7 +25,7 @@ class Game
   def start
     puts "****------Welcome to BATTLESHIP------****".center(40)
     puts "Enter p to play. Enter q to quit.".center(40)
-      start_or_quit = gets.chomp.downcase
+      start_or_quit = gets.chomp.strip.downcase
       if start_or_quit == "q"
         puts "Shutting down systems"
         exit
@@ -61,25 +61,24 @@ def gets_position_input
   puts "Enter the squares for the #{@ship.name}
   (format example: A1 A2 A3)
   (enter #{spaces} spaces):"
-  @player_supplied_coordinates = gets.chomp.upcase
+  @player_supplied_coordinates = gets.chomp.strip.upcase
   check_coordinates
 end
 
   def check_coordinates
   split_player_supplied_coordinates
-  coordinates = @player_board.placement_coordinates
     if @ship == @player_cruiser
       @player_cruiser_coordinates = @player_board.placement_coordinates
     else
       @player_submarine_coordinates = @player_board.placement_coordinates
     end
-  ship = @ship
-    if @player_board.valid_placement?(ship, coordinates) == false
+    if @player_board.valid_placement?(@ship, @player_board.placement_coordinates) == false
       input_error
     else
-      @player_board.place(ship, coordinates)
+      @player_board.place(@ship, @player_board.placement_coordinates)
       puts "\n\n\n ----------- \n\n\n"
     end
+
     if @player_submarine_coordinates == []
       player_enter_squares_and_validates_them
     end
@@ -90,10 +89,9 @@ end
   end
 
   def input_error
-    ship = @ship
     puts "Those are invalid coordinates. Please try
     again:"
-    @player_supplied_coordinates = gets.chomp.upcase
+    @player_supplied_coordinates = gets.chomp.strip.upcase
     check_coordinates
   end
 
@@ -101,7 +99,7 @@ end
     puts "Enter the squares for the Submarine
     (format example: B1 B2)
     (enter 2 spaces):"
-    @player_supplied_coordinates = gets.chomp.upcase
+    @player_supplied_coordinates = gets.chomp.strip.upcase
     check_coordinates
   end
 
@@ -143,6 +141,7 @@ end
   end
 
   def player_takes_turn
+    system "clear"
     puts "===========COMPUTER BOARD==========="
     puts @computer_board.render
     puts "============PLAYER BOARD============"
@@ -153,7 +152,7 @@ end
 
   def player_shot
     puts "Enter the coordinates for your shot:"
-    player_cell_choice = gets.chomp.upcase
+    player_cell_choice = gets.chomp.strip.upcase
       if @computer_board.valid_coordinate?(player_cell_choice) == false
         puts "Invalid coordinate, please try again =D"
       elsif
@@ -177,7 +176,6 @@ end
         puts "SORRY! Computer intelligence surpasses yours today.".center(100)
         exit
       else
-# binding.pry
         false
       end
     end
