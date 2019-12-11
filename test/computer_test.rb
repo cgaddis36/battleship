@@ -25,10 +25,8 @@ class ComputerTest <Minitest::Test
 
 def test_ship_orientation_gives_direction
   @computer.ship_orientation
-
   possible_outcomes = ["vertical", "horizontal"]
-  assert_equal true, possible_outcomes.includes?(@computer.direction)
-
+  assert_equal true, possible_outcomes.include?(@computer.direction)
 end
 
 
