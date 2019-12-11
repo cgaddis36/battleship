@@ -185,13 +185,16 @@ end
       @computer.random_cell
       validate_computer_shot
     end
-    
+    # @computer_board.cells[player_cell_choice].fired_upon == false
     def validate_computer_shot
       if @player_board.cells[@computer.start_cell].fired_upon == false
         @player_board.cells[@computer.start_cell].fire_upon
       else
-        binding.pry
-      computer_takes_shot
+        loop do
+          @player_board.cells[@computer.start_cell].fired_upon == false
+          @computer.random_cell
+          break if @player_board.cells[@computer.start_cell].fired_upon == false
+        end
       end
     end
 end

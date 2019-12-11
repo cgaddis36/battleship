@@ -20,6 +20,7 @@ class Computer
   def random_cell
     @row_rand = rand(65..68)
     @column_rand = rand(1..4)
+    @start_cell = @row_rand.chr + @column_rand.to_s
   end
 
   def ship_orientation
