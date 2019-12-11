@@ -51,7 +51,6 @@ class Computer
         @cruiser_cells << @row_rand.chr + (@column_rand + 1).to_s
         @cruiser_cells << @row_rand.chr + (@column_rand + 2).to_s
     end
-    # binding.pry
   end
 
   def submarine_cells_selection

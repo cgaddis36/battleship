@@ -3,6 +3,8 @@ require './lib/cell'
 require './lib/board'
 require './lib/computer'
 require 'pry'
+require 'colorize'
+require 'colorized_string'
 
 class Game
   attr_accessor :player_supplied_coordinates
@@ -23,17 +25,17 @@ class Game
   end
 
   def start
-    puts "****------Welcome to BATTLESHIP------****".center(40)
-    puts "Enter p to play. Enter q to quit.".center(40)
+    puts "****------Welcome to BATTLESHIP------****".center(40).colorize(:green)
+    puts "Enter p to play. Enter q to quit.".center(40).colorize(:green)
       start_or_quit = gets.chomp.strip.downcase
       if start_or_quit == "q"
-        puts "Shutting down systems"
+        puts "Shutting down systems".colorize(:blue)
         exit
       elsif
         start_or_quit == "p"
-        puts "Starting Battleship!"
+        puts "Starting Battleship!".colorize(:green)
       else
-        puts "Oops, invalid entry."
+        puts "Oops, invalid entry.".colorize(:red)
         start
       end
   end
@@ -41,13 +43,13 @@ class Game
   def player_enter_squares_and_validates_them
   puts  "\n\n\n I have laid out my ships on the grid.
   You now need to lay out your two ships.
-  The Cruiser is three units long and the Submarine is two units long.
-  1 2 3 4
+  The Cruiser is three units long and the Submarine is two units long.".colorize(:cyan) +
+  "\n   1 2 3 4
   A . . . .
   B . . . .
   C . . . .
-  D . . . ."
-    gets_position_input
+  D . . . .".colorize(:red)
+  gets_position_input
 end
 
 def gets_position_input
@@ -60,9 +62,13 @@ def gets_position_input
   end
   puts "Enter the squares for the #{@ship.name}
   (format example: A1 A2 A3)
-  (enter #{spaces} spaces):"
+  (enter #{spaces} spaces):".colorize(:yellow)
   @player_supplied_coordinates = gets.chomp.strip.upcase
+  if @player_supplied_coordinates == "Q"
+    exit
+  else
   check_coordinates
+end
 end
 
   def check_coordinates
@@ -90,15 +96,7 @@ end
 
   def input_error
     puts "Those are invalid coordinates. Please try
-    again:"
-    @player_supplied_coordinates = gets.chomp.strip.upcase
-    check_coordinates
-  end
-
-  def gets_submarine_position_input
-    puts "Enter the squares for the Submarine
-    (format example: B1 B2)
-    (enter 2 spaces):"
+    again:".colorize(:red)
     @player_supplied_coordinates = gets.chomp.strip.upcase
     check_coordinates
   end
@@ -142,38 +140,38 @@ end
 
   def player_takes_turn
     system "clear"
-    puts "===========COMPUTER BOARD==========="
+    puts "===========COMPUTER BOARD===========".colorize(:green)
     puts @computer_board.render
-    puts "============PLAYER BOARD============"
+    puts "============PLAYER BOARD============".colorize(:green)
     puts @player_board.render
-    puts "Take a guess"
+    puts "Take a guess".colorize(:blue)
     player_shot
   end
 
   def player_shot
-    puts "Enter the coordinates for your shot:"
+    puts "Enter the coordinates for your shot:".colorize(:blue)
     player_cell_choice = gets.chomp.strip.upcase
       if @computer_board.valid_coordinate?(player_cell_choice) == false
-        puts "Invalid coordinate, please try again =D"
+        puts "Invalid coordinate, please try again =D".colorize(:yellow)
       elsif
         @computer_board.cells[player_cell_choice].fired_upon == false
         @computer_board.cells[player_cell_choice].fire_upon
         computer_takes_shot
         ships_sunk?
       else
-        puts "Oops. You've already hit this square. Please select another:"
+        puts "Oops. You've already hit this square. Please select another:".colorize(:red)
       end
       player_takes_turn
     end
 
     def ships_sunk?
       if @computer_cruiser.sunk? && @computer_submarine.sunk?
-        puts "***You WIN!! Hooray!!***".center(40)
-        puts "***GAME OVER!!***".center(40)
+        puts "***You WIN!! Hooray!!***".center(40).colorize(:yellow)
+        puts "***GAME OVER!!***".center(40).colorize(:red) 
         exit
       elsif
         @player_cruiser.sunk? && @player_submarine.sunk?
-        puts "SORRY! Computer intelligence surpasses yours today.".center(100)
+        puts "SORRY! Computer intelligence surpasses yours today.".center(100).colorize(:cyan)
         exit
       else
         false
