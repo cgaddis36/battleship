@@ -3,8 +3,6 @@ require './lib/cell'
 require './lib/board'
 require './lib/game'
 
-
-
 class Computer
   attr_reader :direction, :start_cell
   attr_accessor :cruiser_cells, :submarine_cells
