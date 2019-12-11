@@ -119,11 +119,11 @@ end
   def validate_cruiser_coordinates
     coordinates= @computer.cruiser_cells
     ship = @computer_cruiser
-    
       if @computer_board.valid_placement?(ship, coordinates)
         @computer_board.place(ship, coordinates)
       else
-
+        coordinates = []
+        computer_cruiser_placement
       end
   end
 
@@ -152,9 +152,11 @@ end
         @computer_board.cells[player_coordinate].fired_upon == false
         @computer_board.cells[player_coordinate].fired_upon
         computer_takes_shot
+        ships_sunk?
+        player_takes_turn
       else
         puts "Oops. You've already hit this square. Please select another:"
-        player_shot
+        player_takes_turn
       end
     end
 
