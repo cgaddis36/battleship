@@ -16,12 +16,10 @@ class Game
     @computer_submarine = Ship.new("Submarine", 2)
     @player_board = Board.new
     @computer_board = Board.new
+    @computer = Computer.new
     @ship = 0
     @player_cruiser_coordinates = []
     @player_submarine_coordinates = []
-    @computer_cruiser_coordinates = []
-    @computer_submarine_coordinates = []
-    @computer = Computer.new
   end
 
   def start
@@ -111,19 +109,20 @@ end
   end
 
   def computer_cruiser_placement
-    @computer.random_cell
     @computer.cruiser_cells_selection
     validate_cruiser_coordinates
   end
 
   def validate_cruiser_coordinates
-    coordinates= @computer.cruiser_cells
-    ship = @computer_cruiser
-      if @computer_board.valid_placement?(ship, coordinates)
-        @computer_board.place(ship, coordinates)
+      if @computer_board.valid_placement?(@computer_cruiser, @computer.cruiser_cells)
+        @computer_board.place(@computer_cruiser, @computer.cruiser_cells)
       else
-        coordinates = []
-        computer_cruiser_placement
+        @computer.cruiser_cells = []
+        loop do
+          @computer_board.valid_placement?(@computer_cruiser, @computer.cruiser_cells)
+          @computer.cruiser_cells_selection
+          break if @computer_board.valid_placement?(@computer_cruiser, @computer.cruiser_cells)
+        end
       end
   end
 
@@ -134,15 +133,18 @@ end
   end
 
   def validate_submarine_coordinates
-    coordinates = @computer.submarine_cells
-    ship = @computer_submarine
-      if @computer_board.valid_placement?(ship, coordinates)
-        @computer_board.place(ship, coordinates)
-      else
-        coordinates = []
+    if  @computer_board.valid_placement?(@computer_submarine, @computer.submarine_cells)
+      @computer_board.place(@computer_submarine, @computer.submarine_cells)
+    else
+      @computer.submarine_cells = []
+      loop do
+        @computer_board.valid_placement?(@computer_submarine, @computer.submarine_cells)
+        @computer.submarine_cells_selection
+        break if @computer_board.valid_placement?(@computer_submarine, @computer.submarine_cells)
       end
+    end
   end
-
+  
   def player_shot
         puts "Enter the coordinates for your shot:"
     player_coordinate = gets.chomp.upcase
@@ -150,7 +152,7 @@ end
         puts "Invalid coordinate, please try again =D"
       elsif
         @computer_board.cells[player_coordinate].fired_upon == false
-        @computer_board.cells[player_coordinate].fired_upon
+        @computer_board.cells[player_coordinate].fire_upon
         computer_takes_shot
         ships_sunk?
         player_takes_turn
@@ -164,7 +166,7 @@ end
       puts "===========COMPUTER BOARD==========="
       puts @computer_board.render
       puts "============PLAYER BOARD============"
-      puts @player_board.render(true)
+      puts @player_board.render
       puts "Take a guess"
       player_shot
     end
@@ -187,7 +189,7 @@ end
     end
 
     def validate_computer_shot
-      if @player_board.cells.has_key?(@computer.start_cell) && (@player_board.cells[@computer.start_cell].fire_upon == false)
+      if @player_board.cells[@computer.start_cell].fired_upon == false
         @player_board.cells[@computer.start_cell].fire_upon
       else
       computer_takes_shot
