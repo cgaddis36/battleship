@@ -23,11 +23,11 @@ class Computer
     @row_rand = rand(65..68)
     @column_rand = rand(1..4)
     @start_cell = @row_rand.chr + @column_rand.to_s
-    ship_orientation
   end
 
   def cruiser_cells_selection
     random_cell
+    ship_orientation
     if @direction == "vertical" && @row_rand >= 67
       random_cell
     elsif @direction == "horizontal" && @column_rand >= 3
@@ -46,6 +46,24 @@ class Computer
     end
   end
 
+  def submarine_cells_selection
+    random_cell
+    if @direction == "vertical" && @row_rand == 69
+      random_cell
+    elsif @direction == "horizontal" && @column_rand == 4
+      random_cell
+    else
+      if @direction = "vertical"
+        @submarine_cells << @start_cell
+        @submarine_cells << (@row_rand + 1).chr + @column_rand.to_s
+      else
+        @direction = "horizontal"
+        @submarine_cells << @start_cell
+        @submarine_cells << @row_rand.chr + (@column_rand + 1).to_s
+      end
+    end
+  end
+
   def ship_orientation
       if rand(1..2) == 1
         @direction = "vertical"
@@ -54,7 +72,8 @@ class Computer
       end
     end
 
-
+    def computer_takes_shot
+      @start_cell
 
 
 

@@ -9,9 +9,11 @@ class Game
   attr_reader :placement_coordinates, :player_board, :computer_board
 
   def initialize
-    @player_supplied_coordinates = "0"
-    @cruiser = Ship.new("Cruiser", 3)
-    @submarine = Ship.new("Submarine", 2)
+    @player_supplied_coordinates = []
+    @player_cruiser = Ship.new("Cruiser", 3)
+    @computer_cruiser = Ship.new("Cruiser", 3)
+    @player_submarine = Ship.new("Submarine", 2)
+    @computer_submarine = Ship.new("Submarine", 2)
     @player_board = Board.new
     @computer_board = Board.new
     @ship = 0
@@ -52,10 +54,10 @@ end
 
 def gets_position_input
   if @player_cruiser_coordinates == []
-    @ship = @cruiser
+    @ship = @player_cruiser
     spaces = "3"
   else
-    @ship = @submarine
+    @ship = @player_submarine
     spaces = "2"
   end
   puts "Enter the squares for the #{@ship.name}
@@ -68,7 +70,7 @@ end
   def check_coordinates
   split_player_supplied_coordinates
   coordinates = @player_board.placement_coordinates
-    if @ship == @cruiser
+    if @ship == @player_cruiser
       @player_cruiser_coordinates = @player_board.placement_coordinates
     else
       @player_submarine_coordinates = @player_board.placement_coordinates
@@ -110,30 +112,77 @@ end
 
   def computer_cruiser_placement
     @computer.cruiser_cells_selection
-    @computer_board.placement_coordinates = @computer.cruiser_cells
-    ship = @cruiser
-    coordinates = @computer_board.placement_coordinates
-      if @computer_board.valid_placement?(ship, coordinates) == true
+    validate_cruiser_coordinates
+  end
+
+  def validate_cruiser_coordinates
+    coordinates= @computer.cruiser_cells
+    ship = @computer_cruiser
+      if @computer_board.valid_placement?(ship, coordinates)
         @computer_board.place(ship, coordinates)
       else
-        @computer.cruiser_cells_selection
+        computer_cruiser_placement
+        coordinates = []
+      end
+      # binding.pry
+  end
+
+  def computer_submarine_placement
+    @computer.submarine_cells_selection
+    validate_submarine_coordinates
+  end
+
+  def validate_submarine_coordinates
+    coordinates = @computer.submarine_cells
+    ship = @computer_submarine
+      if @computer_board.valid_placement?(ship, coordinates)
+        @computer_board.place(ship, coordinates)
+      else
+        computer_submarine_placement
+        coordinates = []
       end
   end
 
   def player_shot
+    ships_sunk?
     puts "Enter the coordinates for your shot:"
     player_coordinate = gets.chomp.upcase
-      if player_coordinate.fired_upon == false
-        player_coordinate.fired_upon
-      elsif
-        !@board.valid_coordinate?(player_coordinate)
+      if !@computer_board.valid_coordinate?(player_coordinate)
         puts "Invalid coordinate, please try again =D"
+      elsif
+        @computer_board.cells[player_coordinate].fired_upon == false
+        @computer_board.cells[player_coordinate].fired_upon
       else
         puts "Oops. You've already hit this square. Please select another:"
-        player_shot
+        player_takes_turn
       end
     end
 
+    def player_takes_turn
+      puts "===========COMPUTER BOARD==========="
+      puts @computer_board.render
+      puts "============PLAYER BOARD============"
+      puts @player_board.render(true)
+      puts "Take a guess"
+      player_shot
+    end
+
+    def ships_sunk?
+      if @computer_cruiser.sunk && @computer_submarine.sunk
+        puts "***You WIN!! Hooray!!***".center(40)
+        puts "***GAME OVER!!***".center(40)
+      elsif
+        @player_cruiser.sunk && @player_submarine.sunk
+        puts "SORRY! Computer intelligence surpasses yours today.".center
+      else
+        player_takes_turn
+      end
+    end
+
+    def computer_takes_shot
+      computer_picks_cell
+      if @computer_board.cells.has_key?(@computer.start_cell)
+        @computer_board.cells[@computer.start_cell]
 
 
 
@@ -145,21 +194,5 @@ end
 
 
 
-
-  # def player_take_turn
-  #   turn = Turn.new(guess)
-  #     turn.player_takes_turn
-  #     coordinate = turn.guess
-  #     return turn.turn_input_error_message if @board.cells[coordinate]
-  #     if @player_board[coordinate].fired_upon == false
-  #       @player_board[coordinate].fire_upon
-  #       @player_guesses << [coordinate]
-  #     elsif
-  #       @player_board[coordinate].fired_upon == true
-  #         turn.turn_input_error_message
-  #     end
 
 end
-
-
-      # turn.computer_takes_turn
