@@ -77,11 +77,8 @@ end
     if @player_board.valid_placement?(ship, coordinates) == false
       input_error
     else
-
       @player_board.place(ship, coordinates)
       puts "\n\n\n ----------- \n\n\n"
-      puts @computer_board.render(true)
-      puts @player_board.render(true)
     end
     if @player_submarine_coordinates == []
       player_enter_squares_and_validates_them
@@ -144,15 +141,25 @@ end
       end
     end
   end
-  
+
+  def player_takes_turn
+    puts "===========COMPUTER BOARD==========="
+    puts @computer_board.render
+    puts "============PLAYER BOARD============"
+    puts @player_board.render
+    puts "Take a guess"
+    player_shot
+  end
+
   def player_shot
-        puts "Enter the coordinates for your shot:"
-    player_coordinate = gets.chomp.upcase
-      if !@computer_board.valid_coordinate?(player_coordinate)
+    puts "Enter the coordinates for your shot:"
+    player_cell_choice = gets.chomp.upcase
+      if @computer_board.valid_coordinate?(player_cell_choice) == false
         puts "Invalid coordinate, please try again =D"
+        player_takes_turn
       elsif
-        @computer_board.cells[player_coordinate].fired_upon == false
-        @computer_board.cells[player_coordinate].fire_upon
+        @computer_board.cells[player_cell_choice].fired_upon == false
+        @computer_board.cells[player_cell_choice].fire_upon
         computer_takes_shot
         ships_sunk?
         player_takes_turn
@@ -162,24 +169,15 @@ end
       end
     end
 
-    def player_takes_turn
-      puts "===========COMPUTER BOARD==========="
-      puts @computer_board.render
-      puts "============PLAYER BOARD============"
-      puts @player_board.render
-      puts "Take a guess"
-      player_shot
-    end
-
     def ships_sunk?
       if @computer_cruiser.sunk && @computer_submarine.sunk
         puts "***You WIN!! Hooray!!***".center(40)
         puts "***GAME OVER!!***".center(40)
       elsif
-        @player_cruiser.sunk? && @player_submarine.sunk?
+        @player_cruiser.sunk && @player_submarine.sunk
         puts "SORRY! Computer intelligence surpasses yours today.".center(100)
       else
-        player_takes_turn
+        false
       end
     end
 
@@ -187,11 +185,12 @@ end
       @computer.random_cell
       validate_computer_shot
     end
-
+    
     def validate_computer_shot
       if @player_board.cells[@computer.start_cell].fired_upon == false
         @player_board.cells[@computer.start_cell].fire_upon
       else
+        binding.pry
       computer_takes_shot
       end
     end
