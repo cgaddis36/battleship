@@ -30,8 +30,7 @@ class Game
     if start_or_quit == "q"
       puts "Shutting down systems"
       exit
-    elsif
-      start_or_quit == "p"
+    elsif start_or_quit == "p"
       puts "Starting Battleship!"
     else
       puts "Oops, invalid entry."
