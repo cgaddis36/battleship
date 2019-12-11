@@ -114,11 +114,11 @@ end
       if @computer_board.valid_placement?(@computer_cruiser, @computer.cruiser_cells)
         @computer_board.place(@computer_cruiser, @computer.cruiser_cells)
       else
-        @computer.cruiser_cells = []
         loop do
           @computer_board.valid_placement?(@computer_cruiser, @computer.cruiser_cells)
           @computer.cruiser_cells_selection
           break if @computer_board.valid_placement?(@computer_cruiser, @computer.cruiser_cells)
+          @computer_board.place(@computer_cruiser, @computer.cruiser_cells)
         end
       end
   end
@@ -133,12 +133,12 @@ end
     if  @computer_board.valid_placement?(@computer_submarine, @computer.submarine_cells)
       @computer_board.place(@computer_submarine, @computer.submarine_cells)
     else
-      @computer.submarine_cells = []
       loop do
         @computer_board.valid_placement?(@computer_submarine, @computer.submarine_cells)
         @computer.submarine_cells_selection
         break if @computer_board.valid_placement?(@computer_submarine, @computer.submarine_cells)
       end
+      @computer_board.place(@computer_submarine, @computer.submarine_cells)
     end
   end
 
@@ -160,8 +160,8 @@ end
       elsif
         @computer_board.cells[player_cell_choice].fired_upon == false
         @computer_board.cells[player_cell_choice].fire_upon
-        computer_takes_shot
         ships_sunk?
+        computer_takes_shot
         player_takes_turn
       else
         puts "Oops. You've already hit this square. Please select another:"
@@ -170,12 +170,14 @@ end
     end
 
     def ships_sunk?
-      if @computer_cruiser.sunk && @computer_submarine.sunk
+      if @computer_cruiser.sunk? && @computer_submarine.sunk?
         puts "***You WIN!! Hooray!!***".center(40)
         puts "***GAME OVER!!***".center(40)
+        q
       elsif
-        @player_cruiser.sunk && @player_submarine.sunk
+        @player_cruiser.sunk? && @player_submarine.sunk?
         puts "SORRY! Computer intelligence surpasses yours today.".center(100)
+        q
       else
         false
       end
@@ -183,10 +185,6 @@ end
 
     def computer_takes_shot
       @computer.random_cell
-      validate_computer_shot
-    end
-    # @computer_board.cells[player_cell_choice].fired_upon == false
-    def validate_computer_shot
       if @player_board.cells[@computer.start_cell].fired_upon == false
         @player_board.cells[@computer.start_cell].fire_upon
       else
@@ -194,6 +192,7 @@ end
           @player_board.cells[@computer.start_cell].fired_upon == false
           @computer.random_cell
           break if @player_board.cells[@computer.start_cell].fired_upon == false
+          @player_board.cells[@computer.start_cell].fire_upon
         end
       end
     end
