@@ -26,12 +26,13 @@ class Computer
   end
 
   def cruiser_cells_selection
-    random_cell
     ship_orientation
     if @direction == "vertical" && @row_rand >= 67
       random_cell
+      cruiser_cells_selection
     elsif @direction == "horizontal" && @column_rand >= 3
       random_cell
+      cruiser_cells_selection
     else
       if @direction = "vertical"
         @cruiser_cells << @start_cell
@@ -47,11 +48,13 @@ class Computer
   end
 
   def submarine_cells_selection
-    random_cell
-    if @direction == "vertical" && @row_rand == 69
+    ship_orientation
+    if @direction == "vertical" && @row_rand == 68
       random_cell
+      submarine_cells_selection
     elsif @direction == "horizontal" && @column_rand == 4
       random_cell
+      submarine_cells_selection
     else
       if @direction = "vertical"
         @submarine_cells << @start_cell
@@ -72,8 +75,7 @@ class Computer
       end
     end
 
-    def computer_takes_shot
-      @start_cell
+
 
 
 

@@ -111,6 +111,7 @@ end
   end
 
   def computer_cruiser_placement
+    @computer.random_cell
     @computer.cruiser_cells_selection
     validate_cruiser_coordinates
   end
@@ -118,16 +119,16 @@ end
   def validate_cruiser_coordinates
     coordinates= @computer.cruiser_cells
     ship = @computer_cruiser
+    
       if @computer_board.valid_placement?(ship, coordinates)
         @computer_board.place(ship, coordinates)
       else
-        computer_cruiser_placement
-        coordinates = []
+
       end
-      # binding.pry
   end
 
   def computer_submarine_placement
+    @computer.random_cell
     @computer.submarine_cells_selection
     validate_submarine_coordinates
   end
@@ -138,23 +139,22 @@ end
       if @computer_board.valid_placement?(ship, coordinates)
         @computer_board.place(ship, coordinates)
       else
-        computer_submarine_placement
         coordinates = []
       end
   end
 
   def player_shot
-    ships_sunk?
-    puts "Enter the coordinates for your shot:"
+        puts "Enter the coordinates for your shot:"
     player_coordinate = gets.chomp.upcase
       if !@computer_board.valid_coordinate?(player_coordinate)
         puts "Invalid coordinate, please try again =D"
       elsif
         @computer_board.cells[player_coordinate].fired_upon == false
         @computer_board.cells[player_coordinate].fired_upon
+        computer_takes_shot
       else
         puts "Oops. You've already hit this square. Please select another:"
-        player_takes_turn
+        player_shot
       end
     end
 
@@ -172,27 +172,23 @@ end
         puts "***You WIN!! Hooray!!***".center(40)
         puts "***GAME OVER!!***".center(40)
       elsif
-        @player_cruiser.sunk && @player_submarine.sunk
-        puts "SORRY! Computer intelligence surpasses yours today.".center
+        @player_cruiser.sunk? && @player_submarine.sunk?
+        puts "SORRY! Computer intelligence surpasses yours today.".center(100)
       else
         player_takes_turn
       end
     end
 
     def computer_takes_shot
-      computer_picks_cell
-      if @computer_board.cells.has_key?(@computer.start_cell)
-        @computer_board.cells[@computer.start_cell]
+      @computer.random_cell
+      validate_computer_shot
+    end
 
-
-
-
-
-
-
-
-
-
-
-
+    def validate_computer_shot
+      if @player_board.cells.has_key?(@computer.start_cell) && (@player_board.cells[@computer.start_cell].fire_upon == false)
+        @player_board.cells[@computer.start_cell].fire_upon
+      else
+      computer_takes_shot
+      end
+    end
 end
