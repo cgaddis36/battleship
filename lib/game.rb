@@ -156,29 +156,28 @@ end
     player_cell_choice = gets.chomp.upcase
       if @computer_board.valid_coordinate?(player_cell_choice) == false
         puts "Invalid coordinate, please try again =D"
-        player_takes_turn
       elsif
         @computer_board.cells[player_cell_choice].fired_upon == false
         @computer_board.cells[player_cell_choice].fire_upon
-        ships_sunk?
         computer_takes_shot
-        player_takes_turn
+        ships_sunk?
       else
         puts "Oops. You've already hit this square. Please select another:"
-        player_takes_turn
       end
+      player_takes_turn
     end
 
     def ships_sunk?
       if @computer_cruiser.sunk? && @computer_submarine.sunk?
         puts "***You WIN!! Hooray!!***".center(40)
         puts "***GAME OVER!!***".center(40)
-        q
+        exit
       elsif
         @player_cruiser.sunk? && @player_submarine.sunk?
         puts "SORRY! Computer intelligence surpasses yours today.".center(100)
-        q
+        exit
       else
+# binding.pry
         false
       end
     end
