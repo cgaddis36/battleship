@@ -24,7 +24,6 @@ class GameTest <Minitest::Test
   def test_split_player_supplied_coordinates
     @game.player_supplied_coordinates = "A1 A2 A3"
     @game.split_player_supplied_coordinates
-
     assert_equal ["A1", "A2", "A3"], @game.player_board.placement_coordinates
   end
 
@@ -35,9 +34,4 @@ class GameTest <Minitest::Test
   #   @game.player_supplied_coordinates = "A1 A1 A1"
   #   assert_equal false, @game.check_coordinates
   # end
-
-
-
-
-
-  end
+end
