@@ -10,11 +10,11 @@ require './lib/game'
 class ComputerTest <Minitest::Test
 
   def setup
-  @game = Game.new
-  @board = Board.new
-  @computer = Computer.new
-  @cruiser = Ship.new("Cruiser", 3)
-  @submarine = Ship.new("Submarine", 2)
+    @game = Game.new
+    @board = Board.new
+    @computer = Computer.new
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
   end
 
   def test_computer_cell_choice

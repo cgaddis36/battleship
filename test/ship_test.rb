@@ -6,12 +6,13 @@ require 'pry'
 class ShipTest <Minitest::Test
   def setup
     @cruiser = Ship.new("Cruiser", 3)
+  end
 
   def test_is_instance_of_Ship
     assert_instance_of Ship, @cruiser
   end
 
-  def test_ship_has_name_length_and_health
+  def test_ship_has_name_length_and_health_and_not_sunk_at_start
     assert_equal "Cruiser", @cruiser.name
     assert_equal 3, @cruiser.length
     assert_equal 3, @cruiser.health

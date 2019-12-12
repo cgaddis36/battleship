@@ -26,12 +26,4 @@ class GameTest <Minitest::Test
     @game.split_player_supplied_coordinates
     assert_equal ["A1", "A2", "A3"], @game.player_board.placement_coordinates
   end
-
-  # def test_check_coordinates_can_check_coordinates
-  #   @game.ship = @player_cruiser
-  #   @game.check_coordinates
-  #   assert_equal true, @game.check_coordinates
-  #   @game.player_supplied_coordinates = "A1 A1 A1"
-  #   assert_equal false, @game.check_coordinates
-  # end
 end
