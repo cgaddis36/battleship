@@ -193,7 +193,7 @@ end
   end
 
   def computer_shot_result
-    if @player_board.cells[@computer.start_cell].ship == 0
+    if @player_board.cells[@computer.start_cell].ship == nil
       puts "My shot on #{@computer.start_cell} was a miss."
     else
       puts "My shot on #{@computer.start_cell} was a hit!"
@@ -201,7 +201,7 @@ end
   end
 
   def player_shot_result
-    if @computer_board.cells[@player_cell_choice].ship == 0
+    if @computer_board.cells[@player_cell_choice].ship == nil
       puts "Your shot on #{@player_cell_choice} was a miss."
     else
       puts "Your shot on #{@player_cell_choice} was a hit!"

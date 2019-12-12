@@ -101,7 +101,7 @@ class Board
 
   def empty_cell?
     @placement_coordinates.all? do |key|
-      @cells[key].ship == 0
+      @cells[key].ship == nil
     end
   end
 
