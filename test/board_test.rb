@@ -66,7 +66,20 @@ class BoardTest <Minitest::Test
     @board.place(@cruiser, ["A1", "A2", "A3"])
     assert_equal true, @cell_3.ship == @cell_2.ship
     assert_equal 0, @cell_4.ship
+  end
 
+  def test_empty_cell_knows_if_a_cell_is_empty
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.placement_coordinates = ["A1", "A2", "A3"]
+    assert_equal false, @board.empty_cell?
+  end
+
+  def test_board_can_test_for_duplicate_placement_coordinates
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.placement_coordinates = ["A1", "A2", "A3"]
+    assert_equal true, @board.duplicate_coordinates?
+    @board.placement_coordinates = ["A1", "A1", "A3"]
+    assert_equal false, @board.duplicate_coordinates?
   end
 
   def test_ships_cant_overlap

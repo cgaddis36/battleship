@@ -10,6 +10,7 @@ class Game
 
   def initialize
     @player_supplied_coordinates = []
+    @player_cell_choice = 0
     @player_cruiser = Ship.new("Cruiser", 3)
     @computer_cruiser = Ship.new("Cruiser", 3)
     @player_submarine = Ship.new("Submarine", 2)
@@ -30,7 +31,7 @@ class Game
     if start_or_quit == "q"
       puts "Shutting down systems"
       exit
-    elsif start_or_quit == "p"
+      elsif start_or_quit == "p"
       puts "Starting Battleship!"
     else
       puts "Oops, invalid entry."
@@ -137,7 +138,6 @@ end
   end
 
   def player_takes_turn
-    # system "clear"
     puts "===========COMPUTER BOARD==========="
     puts @computer_board.render
     puts "============PLAYER BOARD============"
@@ -148,13 +148,14 @@ end
 
   def player_shot
     puts "Enter the coordinates for your shot:"
-    player_cell_choice = gets.chomp.strip.upcase
-    if player_cell_choice == "Q"
+    @player_cell_choice = gets.chomp.strip.upcase
+    if @player_cell_choice == "Q"
       exit
-    elsif @computer_board.valid_coordinate?(player_cell_choice) == false
+    elsif @computer_board.valid_coordinate?(@player_cell_choice) == false
       puts "Invalid coordinate, please try again =D"
-    elsif @computer_board.cells[player_cell_choice].fired_upon == false
-      @computer_board.cells[player_cell_choice].fire_upon
+    elsif @computer_board.cells[@player_cell_choice].fired_upon == false
+      @computer_board.cells[@player_cell_choice].fire_upon
+      player_shot_result
       computer_takes_shot
       ships_sunk?
     else
@@ -180,12 +181,30 @@ end
     @computer.random_cell
     if @player_board.cells[@computer.start_cell].fired_upon == false
       @player_board.cells[@computer.start_cell].fire_upon
+      computer_shot_result
     else
       loop do
         @computer.random_cell
           break if @player_board.cells[@computer.start_cell].fired_upon == false
       end
       @player_board.cells[@computer.start_cell].fire_upon
+      computer_shot_result
+    end
+  end
+
+  def computer_shot_result
+    if @player_board.cells[@computer.start_cell].ship == 0
+      puts "My shot on #{@computer.start_cell} was a miss."
+    else
+      puts "My shot on #{@computer.start_cell} was a hit!"
+    end
+  end
+
+  def player_shot_result
+    if @computer_board.cells[@player_cell_choice].ship == 0
+      puts "Your shot on #{@player_cell_choice} was a miss."
+    else
+      puts "Your shot on #{@player_cell_choice} was a hit!"
     end
   end
 end
