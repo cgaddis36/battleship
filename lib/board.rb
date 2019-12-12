@@ -1,6 +1,8 @@
 require 'pry'
 require './lib/cell'
 require './lib/ship'
+require 'colorize'
+require 'colorized_string'
 
 class Board
   attr_reader :cells, :rows, :columns
@@ -11,6 +13,7 @@ class Board
     @rows = []
     @placement_coordinates = []
     @consecutive = false
+    @ship_size = 0
     @cells = {
       "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
@@ -77,11 +80,11 @@ class Board
     columns_sorted = @columns.uniq
       x = columns_sorted[0]
       y = columns_sorted[-1]
-    column_range_array = (x..y).to_a
-    ord_columns_sorted = []
+      column_range_array = (x..y).to_a
+      ord_columns_sorted = []
       columns_sorted.each do |string|
-        ord_columns_sorted << string.ord
-      end
+      ord_columns_sorted << string.ord
+    end
     columns_sorted_ctally = ord_columns_sorted[0]
       ord_columns_sorted.all? do |num|
         num + 1 == columns_sorted_ctally += 1
@@ -110,10 +113,11 @@ class Board
   end
 
   def render(show = false)
-      "  1 2 3 4 \n" +
-      "A #{@cells["A1"].render(show)} #{@cells["A2"].render(show)} #{@cells["A3"].render(show)} #{@cells["A4"].render(show)} \n" +
-      "B #{@cells["B1"].render(show)} #{@cells["B2"].render(show)} #{@cells["B3"].render(show)} #{@cells["B4"].render(show)} \n" +
-      "C #{@cells["C1"].render(show)} #{@cells["C2"].render(show)} #{@cells["C3"].render(show)} #{@cells["C4"].render(show)} \n" +
-      "D #{@cells["D1"].render(show)} #{@cells["D2"].render(show)} #{@cells["D3"].render(show)} #{@cells["D4"].render(show)} \n"
+      "  1 2 3 4 \n".colorize(:red) +
+      "A #{@cells["A1"].render(show)} #{@cells["A2"].render(show)} #{@cells["A3"].render(show)} #{@cells["A4"].render(show)} \n".colorize(:red) +
+      "B #{@cells["B1"].render(show)} #{@cells["B2"].render(show)} #{@cells["B3"].render(show)} #{@cells["B4"].render(show)} \n".colorize(:red) +
+      "C #{@cells["C1"].render(show)} #{@cells["C2"].render(show)} #{@cells["C3"].render(show)} #{@cells["C4"].render(show)} \n".colorize(:red) +
+      "D #{@cells["D1"].render(show)} #{@cells["D2"].render(show)} #{@cells["D3"].render(show)} #{@cells["D4"].render(show)} \n".colorize(:red)
+    end
   end
 end

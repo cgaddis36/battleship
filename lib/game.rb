@@ -3,6 +3,8 @@ require './lib/cell'
 require './lib/board'
 require './lib/computer'
 require 'pry'
+require 'colorize'
+require 'colorized_string'
 
 class Game
   attr_accessor :player_supplied_coordinates
@@ -24,31 +26,40 @@ class Game
   end
 
   def start
-    system "clear"
-    puts "****------Welcome to BATTLESHIP------****".center(40)
-    puts "Enter p to play. Enter q to quit.".center(40)
-    start_or_quit = gets.chomp.strip.downcase
-    if start_or_quit == "q"
-      puts "Shutting down systems"
-      exit
-      elsif start_or_quit == "p"
-      puts "Starting Battleship!"
-    else
-      puts "Oops, invalid entry."
-      start
-    end
+    puts "****------Welcome to BATTLESHIP------****".center(40).colorize(:green)
+    puts "Enter p to play. Enter q to quit.".center(40).colorize(:green)
+      start_or_quit = gets.chomp.strip.downcase
+      if start_or_quit == "q"
+        puts "Shutting down systems".colorize(:blue)
+        exit
+      elsif
+        start_or_quit == "p"
+        puts "Starting Battleship!".colorize(:green)
+      else
+        puts "Oops, invalid entry.".colorize(:red)
+        start
+      end
   end
 
   def player_enter_squares_and_validates_them
-    puts  "\n\n\n I have laid out my ships on the grid.
-    You now need to lay out your two ships.
-    The Cruiser is three units long and the Submarine is two units long.
-    1 2 3 4
-    A . . . .
-    B . . . .
-    C . . . .
-    D . . . ."
-    gets_position_input
+  puts  "\n\n\n I have laid out my ships on the grid.
+  You now need to lay out your two ships.
+  The Cruiser is three units long and the Submarine is two units long.".colorize(:cyan) +
+  "\n   1 2 3 4
+  A . . . .
+  B . . . .
+  C . . . .
+  D . . . .".colorize(:red)
+  gets_position_input
+end
+
+def gets_position_input
+  if @player_cruiser_coordinates == []
+    @ship = @player_cruiser
+    spaces = "3"
+  else
+    @ship = @player_submarine
+    spaces = "2"
   end
 
   def gets_position_input
@@ -60,14 +71,15 @@ class Game
       spaces = "2"
     end
   puts "Enter the squares for the #{@ship.name}
-        (format example: A1 A2 A3)
-        (enter #{spaces} spaces):"
+  (format example: A1 A2 A3)
+  (enter #{spaces} spaces):".colorize(:yellow)
   @player_supplied_coordinates = gets.chomp.strip.upcase
   if @player_supplied_coordinates == "Q"
     exit
   else
     check_coordinates
   end
+end
 end
 
   def check_coordinates
@@ -140,9 +152,9 @@ end
   def player_takes_turn
     puts "===========COMPUTER BOARD==========="
     puts @computer_board.render
-    puts "============PLAYER BOARD============"
+    puts "============PLAYER BOARD============".colorize(:green)
     puts @player_board.render
-    puts "Take a guess"
+    puts "Take a guess".colorize(:blue)
     player_shot
   end
 

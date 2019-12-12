@@ -27,4 +27,11 @@ class ComputerTest <Minitest::Test
     possible_outcomes = ["vertical", "horizontal"]
     assert_equal true, possible_outcomes.include?(@computer.direction)
   end
+
+  def test_cruiser_cells_selection
+    @computer.cruiser_cells_selection
+    assert_equal 3, @computer.cruiser_cells.length
+    @computer.submarine_cells_selection
+    assert_equal 2, @computer.submarine_cells.length
+  end
 end
