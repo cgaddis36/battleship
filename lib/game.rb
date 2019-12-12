@@ -26,40 +26,32 @@ class Game
   end
 
   def start
-    puts "****------Welcome to BATTLESHIP------****".center(40).colorize(:green)
-    puts "Enter p to play. Enter q to quit.".center(40).colorize(:green)
-      start_or_quit = gets.chomp.strip.downcase
-      if start_or_quit == "q"
-        puts "Shutting down systems".colorize(:blue)
-        exit
-      elsif
-        start_or_quit == "p"
-        puts "Starting Battleship!".colorize(:green)
-      else
-        puts "Oops, invalid entry.".colorize(:red)
-        start
-      end
+    system "clear"
+    puts "****------Welcome to BATTLESHIP------****".center(40)
+    puts "Enter p to play. Enter q to quit.".center(40)
+    start_or_quit = gets.chomp.strip.downcase
+    if start_or_quit == "q"
+      puts "Shutting down systems"
+      exit
+      elsif start_or_quit == "p"
+      puts "Starting Battleship!"
+    else
+      puts "Oops, invalid entry."
+      start
+    end
   end
 
   def player_enter_squares_and_validates_them
-  puts  "\n\n\n I have laid out my ships on the grid.
-  You now need to lay out your two ships.
-  The Cruiser is three units long and the Submarine is two units long.".colorize(:cyan) +
-  "\n   1 2 3 4
-  A . . . .
-  B . . . .
-  C . . . .
-  D . . . .".colorize(:red)
-  gets_position_input
-end
+    puts  "\n\n\n I have laid out my ships on the grid.
+    You now need to lay out your two ships.
+    The Cruiser is three units long and the Submarine is two units long.
+    1 2 3 4
+    A . . . .
+    B . . . .
+    C . . . .
+    D . . . ."
+    gets_position_input
 
-def gets_position_input
-  if @player_cruiser_coordinates == []
-    @ship = @player_cruiser
-    spaces = "3"
-  else
-    @ship = @player_submarine
-    spaces = "2"
   end
 
   def gets_position_input
@@ -71,8 +63,13 @@ def gets_position_input
       spaces = "2"
     end
   puts "Enter the squares for the #{@ship.name}
+<<<<<<< HEAD
   (format example: A1 A2 A3)
   (enter #{spaces} spaces):".colorize(:yellow)
+=======
+        (format example: A1 A2 A3)
+        (enter #{spaces} spaces):"
+>>>>>>> acaa7c68f7ff9a7ed0c6bad4a9c36340558ef145
   @player_supplied_coordinates = gets.chomp.strip.upcase
   if @player_supplied_coordinates == "Q"
     exit
@@ -105,6 +102,7 @@ end
 
   def input_error
     puts "Those are invalid coordinates. Please try
+
     again:"
     @player_supplied_coordinates = gets.chomp.strip.upcase
     if @player_supplied_coordinates == "Q"
@@ -112,6 +110,7 @@ end
     else
       check_coordinates
     end
+
   end
 
   def computer_cruiser_placement
