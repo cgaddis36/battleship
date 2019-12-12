@@ -3,8 +3,6 @@ require './lib/cell'
 require './lib/board'
 require './lib/computer'
 require 'pry'
-require 'colorize'
-require 'colorized_string'
 
 class Game
   attr_accessor :player_supplied_coordinates
@@ -26,7 +24,6 @@ class Game
   end
 
   def start
-    system "clear"
     puts "****------Welcome to BATTLESHIP------****".center(40)
     puts "Enter p to play. Enter q to quit.".center(40)
     start_or_quit = gets.chomp.strip.downcase
@@ -51,7 +48,6 @@ class Game
     C . . . .
     D . . . ."
     gets_position_input
-
   end
 
   def gets_position_input
@@ -62,22 +58,16 @@ class Game
       @ship = @player_submarine
       spaces = "2"
     end
-  puts "Enter the squares for the #{@ship.name}
-<<<<<<< HEAD
-  (format example: A1 A2 A3)
-  (enter #{spaces} spaces):".colorize(:yellow)
-=======
-        (format example: A1 A2 A3)
-        (enter #{spaces} spaces):"
->>>>>>> acaa7c68f7ff9a7ed0c6bad4a9c36340558ef145
-  @player_supplied_coordinates = gets.chomp.strip.upcase
-  if @player_supplied_coordinates == "Q"
-    exit
-  else
-    check_coordinates
+    puts "Enter the squares for the #{@ship.name}
+          (format example: A1 A2 A3)
+          (enter #{spaces} spaces):"
+    @player_supplied_coordinates = gets.chomp.strip.upcase
+    if @player_supplied_coordinates == "Q"
+      exit
+    else
+      check_coordinates
+    end
   end
-end
-end
 
   def check_coordinates
     split_player_supplied_coordinates
@@ -101,16 +91,13 @@ end
   end
 
   def input_error
-    puts "Those are invalid coordinates. Please try
-
-    again:"
+    puts "Those are invalid coordinates. Please try again:"
     @player_supplied_coordinates = gets.chomp.strip.upcase
     if @player_supplied_coordinates == "Q"
       exit
     else
       check_coordinates
     end
-
   end
 
   def computer_cruiser_placement
@@ -151,9 +138,9 @@ end
   def player_takes_turn
     puts "===========COMPUTER BOARD==========="
     puts @computer_board.render
-    puts "============PLAYER BOARD============".colorize(:green)
+    puts "============PLAYER BOARD============"
     puts @player_board.render
-    puts "Take a guess".colorize(:blue)
+    puts "Take a guess"
     player_shot
   end
 

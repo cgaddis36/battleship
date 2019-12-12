@@ -28,7 +28,7 @@ class CellTest <Minitest::Test
     @cell_1.place_ship(@cruiser)
     assert_equal @cruiser, @cell_1.ship
     assert_equal false, @cell_1.empty?
-    assert_equal 0, @cell_2.ship
+    assert_nil @cell_2.ship
     assert_equal true, @cell_2.empty?
   end
 
