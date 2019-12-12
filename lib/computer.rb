@@ -21,11 +21,11 @@ class Computer
   end
 
   def ship_orientation
-      if rand(1..2) == 1
-        @direction = "vertical"
-      else
-        @direction = "horizontal"
-      end
+    if rand(1..2) == 1
+      @direction = "vertical"
+    else
+      @direction = "horizontal"
+    end
   end
 
   def cruiser_cells_selection
