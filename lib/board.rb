@@ -11,6 +11,7 @@ class Board
     @rows = []
     @placement_coordinates = []
     @consecutive = false
+    @ship_size = 0
     @cells = {
       "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
@@ -82,6 +83,7 @@ class Board
       columns_sorted.each do |string|
         ord_columns_sorted << string.ord
       end
+
     columns_sorted_ctally = ord_columns_sorted[0]
       ord_columns_sorted.all? do |num|
         num + 1 == columns_sorted_ctally += 1

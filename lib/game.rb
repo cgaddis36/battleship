@@ -3,6 +3,8 @@ require './lib/cell'
 require './lib/board'
 require './lib/computer'
 require 'pry'
+require 'colorize'
+require 'colorized_string'
 
 class Game
   attr_accessor :player_supplied_coordinates
@@ -49,6 +51,7 @@ class Game
     C . . . .
     D . . . ."
     gets_position_input
+
   end
 
   def gets_position_input
@@ -68,6 +71,7 @@ class Game
   else
     check_coordinates
   end
+end
 end
 
   def check_coordinates
@@ -93,6 +97,7 @@ end
 
   def input_error
     puts "Those are invalid coordinates. Please try
+
     again:"
     @player_supplied_coordinates = gets.chomp.strip.upcase
     if @player_supplied_coordinates == "Q"
@@ -100,6 +105,7 @@ end
     else
       check_coordinates
     end
+
   end
 
   def computer_cruiser_placement
@@ -140,9 +146,9 @@ end
   def player_takes_turn
     puts "===========COMPUTER BOARD==========="
     puts @computer_board.render
-    puts "============PLAYER BOARD============"
+    puts "============PLAYER BOARD============".colorize(:green)
     puts @player_board.render
-    puts "Take a guess"
+    puts "Take a guess".colorize(:blue)
     player_shot
   end
 
